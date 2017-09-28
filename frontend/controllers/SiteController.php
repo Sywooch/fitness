@@ -1,0 +1,115 @@
+<?php
+namespace frontend\controllers;
+
+use Yii;
+use yii\base\InvalidParamException;
+use yii\web\BadRequestHttpException;
+use yii\web\Controller;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
+
+
+class SiteController extends Controller
+{
+
+    private function _getStatusCodeMessage($status)
+    {
+        $codes = [
+            100 => 'Continue',
+            101 => 'Switching Protocols',
+            200 => 'OK',
+            201 => 'Created',
+            202 => 'Accepted',
+            203 => 'Non-Authoritative Information',
+            204 => 'No Content',
+            205 => 'Reset Content',
+            206 => 'Partial Content',
+            300 => 'Multiple Choices',
+            301 => 'Moved Permanently',
+            302 => 'Found',
+            303 => 'See Other',
+            304 => 'Not Modified',
+            305 => 'Use Proxy',
+            306 => '(Unused)',
+            307 => 'Temporary Redirect',
+            400 => 'Bad Request',
+            401 => 'Unauthorized',
+            402 => 'Payment Required',
+            403 => 'Forbidden',
+            404 => 'Not Found',
+            405 => 'Method Not Allowed',
+            406 => 'Not Acceptable',
+            407 => 'Proxy Authentication Required',
+            408 => 'Request Timeout',
+            409 => 'Conflict',
+            410 => 'Gone',
+            411 => 'Length Required',
+            412 => 'Precondition Failed',
+            413 => 'Request Entity Too Large',
+            414 => 'Request-URI Too Long',
+            415 => 'Unsupported Media Type',
+            416 => 'Requested Range Not Satisfiable',
+            417 => 'Expectation Failed',
+            500 => 'Internal Server Error',
+            501 => 'Not Implemented',
+            502 => 'Bad Gateway',
+            503 => 'Service Unavailable',
+            504 => 'Gateway Timeout',
+            505 => 'HTTP Version Not Supported'
+        ];
+
+        return isset($codes[$status]) ? $codes[$status] : '';
+    }
+
+    public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+
+        if ($exception !== null) {
+            return [
+                'success' => 0,
+                'error_code' => $exception->statusCode,
+                'message' => $this->_getStatusCodeMessage($exception->statusCode)
+            ];
+        }
+    }
+    
+    
+    public function actionRequestPasswordReset()
+    {
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
+            }
+        }
+
+        return $this->render('requestPasswordResetToken', [
+            'model' => $model,
+        ]);
+    }
+
+
+    public function actionResetPassword($token)
+    {
+        try {
+            $model = new ResetPasswordForm($token);
+        } catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', 'New password saved.');
+
+            return $this->goHome();
+        }
+
+        return $this->render('resetPassword', [
+            'model' => $model,
+        ]);
+    }
+}
