@@ -3,14 +3,14 @@
 namespace frontend\models;
 
 use Yii;
+use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
 
     public $_user;
-    public $password;
     public $photo;
 
     public static function tableName()
@@ -18,27 +18,46 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
-
+    public function behaviors()
+    {
+        return [
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'status' => true
+                ],
+            ],
+        ];
+    }
+    
     public function rules()
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
-//            [['avatar'], 'string', 'max' => 255],
-//            ['username', 'required'],
-
-//            [['country', 'city'], 'string', 'max' => 100],
-
+            [['created_at', 'updated_at'], 'string'],
+            [['avatar'], 'string', 'max' => 255],
             [['photo'], 'file'],
 
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
             ['email', 'unique', 'message' => 'This email address has already been taken'],
-
-//            ['phone', 'unique', 'message' => 'This phone number has already been taken'],
+            
         ];
+    }
+
+    //Basic SignUp
+    public function register($request)
+    {
+        $this->username = $request['name'];
+        $this->email = $request['email'];
+        $this->setPassword($request['password']);
+        $this->avatar = 'Not set';
+        $this->generateAuthKey();
+
+        return $this->save();
     }
 
 
@@ -59,7 +78,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email]);
     }
 
     public static function findByPasswordResetToken($token)
@@ -144,24 +163,6 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
 
         return $this->_user->auth_key;
-    }
-    
-
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            $time = time();
-
-            if ($this->isNewRecord) {
-                $this->created_at = $time;
-            }
-
-            $this->updated_at = $time;
-
-            return true;
-        }
-
-        return false;
     }
 
 }

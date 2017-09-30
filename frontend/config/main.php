@@ -12,6 +12,15 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'apns' => [
+            'class' => 'bryglen\apnsgcm\Apns',
+            'environment' => \bryglen\apnsgcm\Apns::ENVIRONMENT_SANDBOX,
+            'pemFile' => dirname(__FILE__).'/apnssert/apns-dev.pem',
+            // 'retryTimes' => 3,
+            'options' => [
+                'sendRetryTimes' => 5
+            ]
+        ],
         'request' => [
             'baseUrl'=> '',
             'enableCookieValidation' => false,
@@ -61,8 +70,12 @@ return [
                     'controller' => ['api/user'],
                     'pluralize'=>false
                 ],
-                
-                'api/test' => '/user/test',
+
+                'api/login' => '/user/login',
+                'api/register' => '/user/register',
+                'api/google-auth' => '/user/google-auth',
+                'api/facebook-auth' => '/user/facebook-auth',
+                'api/upload-avatar' => '/user/upload-avatar'
                 
             ],
         ],
