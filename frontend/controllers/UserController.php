@@ -2,13 +2,14 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Login;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\web\Response;
 use yii\rest\ActiveController;
-use frontend\models\Answer;
+use frontend\models\Library;
+use frontend\models\Login;
 use frontend\models\User;
+use frontend\models\SocialNetwork;
 use yii\web\UploadedFile;
 
 
@@ -22,6 +23,8 @@ class UserController extends ActiveController
         return [
             'login' => ['POST'],
             'register' => ['POST'],
+            'facebook-auth' => ['POST'],
+            'google-auth' => ['POST'],
             'upload-avatar' => ['POST']
         ];
     }
@@ -39,7 +42,7 @@ class UserController extends ActiveController
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'except' => ['login', 'register'],
+            'except' => ['login', 'register', 'facebook-auth', 'google-auth'],
         ];
         return $behaviors;
     }
@@ -48,7 +51,7 @@ class UserController extends ActiveController
     public function actionLogin()
     {
         $login = new Login();
-        $error = new Answer();
+        $lib = new Library();
 
         if($login->load(Yii::$app->request->post()) && $login->validate() && $login->login(Yii::$app->request->post('Login'))){
             return [
@@ -62,7 +65,7 @@ class UserController extends ActiveController
                 ]
             ];
         } else {
-            return $error->response(400, 'Bad request', $login->getErrors());
+            return $lib->response(400, 'Bad request', $login->getErrors());
         }
     }
 
@@ -70,7 +73,7 @@ class UserController extends ActiveController
     public function actionRegister()
     {
         $user = new User();
-        $error = new Answer();
+        $lib = new Library();
 
         if($user->load(Yii::$app->request->post()) && $user->validate() && $user->register(Yii::$app->request->post('User'))){
             return [
@@ -84,23 +87,47 @@ class UserController extends ActiveController
                 ]
             ];
         } else {
-            return $error->response(400, 'Bad request', $user->getErrors());
+            return $lib->response(400, 'Bad request', $user->getErrors());
+        }
+    }
+
+    //Login via Facebook
+    public function actionFacebookAuth()
+    {
+        $model = new SocialNetwork();
+        $lib = new Library();
+
+        if(Yii::$app->request->post('facebook_token')){
+            return $model->FacebookAuth(Yii::$app->request->post('facebook_token'));
+        } else {
+            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+        }
+    }
+
+    //Login via Google
+    public function actionGoogleAuth()
+    {
+        $model = new SocialNetwork();
+        $lib = new Library();
+
+        if(Yii::$app->request->post('google_token')){
+            return $model->GoogleAuth(Yii::$app->request->post('google_token'));
+        } else {
+            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
         }
     }
 
     //Avatar upload
     public function actionUploadAvatar()
     {
+        $lib = new Library();
         $user = Yii::$app->user->identity;
         $photo = UploadedFile::getInstanceByName("photo");
         $imageName = uniqid();
-        $error = new Answer();
 
         if($photo){
             if($user->avatar) {
-                if(!preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i', $user->avatar) && file_exists(getcwd().'/'.$user->avatar)){
-                    unlink(getcwd().'/'.$user->avatar);
-                }
+                $lib->CheckUpdateAvatar($user->avatar);
             }
             $photo->saveAs('avatars/' . $imageName . '.' . $photo->extension);
             $user->avatar = 'avatars/' . $imageName . '.' . $photo->extension;
@@ -112,7 +139,7 @@ class UserController extends ActiveController
                 'photo' => Yii::$app->params['photo'].$user->avatar
             ];
         } else {
-            $error->response(400, 'Bad request');
+            $lib->response(400, 'Bad request');
         }
     }
     
