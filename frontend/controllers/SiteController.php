@@ -73,26 +73,6 @@ class SiteController extends Controller
             ];
         }
     }
-    
-    
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for the provided email address.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
 
     public function actionResetPassword($token)
     {
@@ -102,14 +82,21 @@ class SiteController extends Controller
             throw new BadRequestHttpException($e->getMessage());
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password saved.');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
 
-            return $this->goHome();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
+            Yii::$app->session->setFlash('success', 'New password was saved.');
+            return $this->redirect('complete');
         }
 
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionComplete()
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+        return $this->render('complete');
     }
 }

@@ -73,9 +73,12 @@ return [
 
                 'api/login' => '/user/login',
                 'api/register' => '/user/register',
-                'api/google-auth' => '/user/google-auth',
                 'api/facebook-auth' => '/user/facebook-auth',
-                'api/upload-avatar' => '/user/upload-avatar'
+                'api/google-auth' => '/user/google-auth',
+                'api/logout' => '/user/logout',
+                'api/upload-avatar' => '/user/upload-avatar',
+                'api/change-password' => '/profile/change-password',
+                'api/reset-password' => '/profile/reset-password'
                 
             ],
         ],

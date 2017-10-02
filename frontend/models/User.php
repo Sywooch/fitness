@@ -7,8 +7,8 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 1;
+    const STATUS_DELETED = 1;
+    const STATUS_ACTIVE = 0;
 
     public $_user;
     public $photo;
@@ -78,7 +78,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email]);
+        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
     public static function findByPasswordResetToken($token)

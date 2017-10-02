@@ -25,7 +25,8 @@ class UserController extends ActiveController
             'register' => ['POST'],
             'facebook-auth' => ['POST'],
             'google-auth' => ['POST'],
-            'upload-avatar' => ['POST']
+            'upload-avatar' => ['POST'],
+            'logout' => ['POST']
         ];
     }
 
@@ -140,6 +141,21 @@ class UserController extends ActiveController
             ];
         } else {
             $lib->response(400, 'Bad request');
+        }
+    }
+
+    //Logout user
+    public function actionLogout()
+    {
+        $lib = new Library();
+        $user = Yii::$app->user->identity;
+
+        if(Yii::$app->request->post('logout') && $user){
+            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->save(false);
+            return $lib->response(200, 'Successfully logged out');
+        } else {
+            return $lib->response(400, 'Bad request');
         }
     }
     
