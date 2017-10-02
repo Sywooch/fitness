@@ -31,6 +31,10 @@ class SocialNetwork extends User
         curl_close($ch);
         $result = json_decode($result);
 
+        if(!$result){
+            return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
+        }
+
         if($exist = $user->findByEmail($result->email)){
             return [
                 'status' => 200,
@@ -90,6 +94,10 @@ class SocialNetwork extends User
         $result = curl_exec($ch);
         curl_close($ch);
         $result = json_decode($result);
+
+        if(!$result){
+            return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
+        }
 
         if($exist = $user->findByEmail($result->email)){
             return [
