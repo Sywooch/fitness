@@ -19,6 +19,7 @@ class ProfileController extends ActiveController
     protected function verbs()
     {
         return [
+            'change-profile' => ['POST'],
             'change-password' => ['POST'],
             'reset-password' => ['POST']
         ];
@@ -40,6 +41,19 @@ class ProfileController extends ActiveController
             'except' => ['reset-password']
         ];
         return $behaviors;
+    }
+
+    //Change User profile data
+    public function actionChangeProfile()
+    {
+        $lib = new Library();
+        $profile = new Profile();
+
+        if(Yii::$app->request->post('Profile')){
+            return $profile->ProfileChange(Yii::$app->request->post('Profile'));
+        } else {
+            return $lib->response(400, 'Bad request.');
+        }
     }
 
     //Change User password

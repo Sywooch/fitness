@@ -8,8 +8,6 @@ use yii\base\Model;
 class Profile extends Model
 {
 
-    public $photo;
-
     public function rules()
     {
         return [
@@ -19,25 +17,25 @@ class Profile extends Model
         ];
     }
 
-    public function getToken()
+    //Change profile data
+    public function ProfileChange($request)
     {
-        return $this->auth_key = Yii::$app->user->identity->auth_key;
-    }
-
-    public function Change($request)
-    {
+        $lib = new Library();
         $profile = Yii::$app->user->identity;
 
-        $profile->username = $request['Profile']['name'];
-        $this->username = $request['Profile']['name'];
-        $profile->email = $this->email;
-        $profile->phone = $this->phone;
-        $profile->country = $this->country;
-        $profile->city = $this->city;
+        $profile->username = $request['name'];
+        $profile->email = $request['email'];
 
-        return $profile->save() ? $profile : null;
+        return $profile->save() ?
+            [
+                'avatar' => $profile->avatar,
+                'name' => $profile->username,
+                'email' => $profile->email
+            ]
+            : $lib->response(400, 'Bad request.', $profile->getErrors());
     }
 
+    //Change/Reset password
     public function sendEmail($user)
     {
         if (!$user) {

@@ -77,6 +77,7 @@ return [
                 'api/google-auth' => '/user/google-auth',
                 'api/logout' => '/user/logout',
                 'api/upload-avatar' => '/user/upload-avatar',
+                'api/change-profile' => '/profile/change-profile',
                 'api/change-password' => '/profile/change-password',
                 'api/reset-password' => '/profile/reset-password'
                 
