@@ -31,7 +31,7 @@ class SocialNetwork extends User
         curl_close($ch);
         $result = json_decode($result);
 
-        if(!$result){
+        if($result->error){
             return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
         }
 
@@ -95,7 +95,7 @@ class SocialNetwork extends User
         curl_close($ch);
         $result = json_decode($result);
 
-        if(!$result){
+        if($result->error){
             return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
         }
 
