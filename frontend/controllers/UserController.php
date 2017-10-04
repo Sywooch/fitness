@@ -24,6 +24,8 @@ class UserController extends ActiveController
             'login' => ['POST'],
             'register' => ['POST'],
             'facebook-auth' => ['POST'],
+            'instagram-auth' => ['POST'],
+            'twitter-auth' => ['POST'],
             'google-auth' => ['POST'],
             'upload-avatar' => ['POST'],
             'logout' => ['POST']
@@ -43,7 +45,7 @@ class UserController extends ActiveController
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'except' => ['login', 'register', 'facebook-auth', 'google-auth'],
+            'except' => ['login', 'register', 'facebook-auth', 'instagram-auth', 'twitter-auth', 'google-auth'],
         ];
         return $behaviors;
     }
@@ -100,6 +102,32 @@ class UserController extends ActiveController
 
         if(Yii::$app->request->post('facebook_token')){
             return $model->FacebookAuth(Yii::$app->request->post('facebook_token'));
+        } else {
+            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+        }
+    }
+
+    //Login via Instagram
+    public function actionInstagramAuth()
+    {
+        $model = new SocialNetwork();
+        $lib = new Library();
+
+        if(Yii::$app->request->post('instagram_token')){
+            return $model->InstagramAuth(Yii::$app->request->post('instagram_token'));
+        } else {
+            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+        }
+    }
+
+    //Login via Twitter
+    public function actionTwitterAuth()
+    {
+        $model = new SocialNetwork();
+        $lib = new Library();
+
+        if(Yii::$app->request->post('twitter_token')){
+            return $model->TwitterAuth(Yii::$app->request->post('twitter_token'));
         } else {
             return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
         }
