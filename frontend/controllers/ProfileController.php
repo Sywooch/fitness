@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\ProfilePhoto;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\web\Response;
@@ -20,7 +21,10 @@ class ProfileController extends ActiveController
     {
         return [
             'create-profile' => ['POST'],
-            'change-profile' => ['POST'],
+            'add-result' => ['POST'],
+            'add-result-photo' => ['POST'],
+            'get-result' => ['GET'],
+            'get-result-photo' => ['GET'],
             'change-password' => ['POST'],
             'reset-password' => ['POST']
         ];
@@ -57,17 +61,46 @@ class ProfileController extends ActiveController
         }
     }
 
-    //Change User profile data
-    public function actionChangeProfile()
+    //Add new result
+    public function actionAddResult()
     {
         $lib = new Library();
         $profile = new Profile();
 
-        if(Yii::$app->request->post('Profile')){
-            return $profile->ProfileChange(Yii::$app->request->post('Profile'));
+        if(Yii::$app->request->post('Result')){
+            return $profile->AddResult(Yii::$app->request->post('Result'));
         } else {
             return $lib->response(400, 'Bad request.');
         }
+    }
+    
+    //Add result photos
+    public function actionAddResultPhoto()
+    {
+        $lib = new Library();
+        $profile_photo = new ProfilePhoto();
+        
+        if(Yii::$app->request->post('profile_id')){
+            return $profile_photo->UploadPhotos(Yii::$app->request->post('profile_id'));
+        } else {
+            return $lib->response(400, 'Bad request.');
+        }
+    }
+    
+    //Get all user results
+    public function actionGetResult()
+    {
+        $model = new Profile();
+        
+        return $model->GetResults();
+    }
+
+    //Get all user result photo
+    public function actionGetResultPhoto()
+    {
+        $model = new ProfilePhoto();
+        
+        return $model->GetResultPhoto();
     }
 
     //Change User password

@@ -67,7 +67,7 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/user'],
+                    'controller' => ['user'],
                     'pluralize'=>false
                 ],
 
@@ -79,8 +79,12 @@ return [
                 'api/google-auth' => '/user/google-auth',
                 'api/logout' => '/user/logout',
                 'api/upload-avatar' => '/user/upload-avatar',
+                'api/get-user' => '/user/get-user',
                 'api/create-profile' => '/profile/create-profile',
-                'api/change-profile' => '/profile/change-profile',
+                'api/add-result' => '/profile/add-result',
+                'api/add-result-photo' => '/profile/add-result-photo',
+                'api/get-result' => '/profile/get-result',
+                'api/get-result-photo' => '/profile/get-result-photo',
                 'api/change-password' => '/profile/change-password',
                 'api/reset-password' => '/profile/reset-password'
                 

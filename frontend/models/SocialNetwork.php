@@ -101,7 +101,16 @@ class SocialNetwork extends User
     //Login via Twitter
     public function TwitterAuth($twitter_token)
     {
+        $user = new User();
+        $lib = new Library();
+        $url = 'https://api.twitter.com/1.1/users/show.json?user_id=2433822884';
 
+        $br = curl_init($url);
+        curl_setopt($br, CURLOPT_HTTPHEADER, array('Authorization: Bearer '.$twitter_token));
+        curl_setopt($br, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($br);
+        curl_close($br);
+        var_dump($data);die;
     }
 
     //Login via Google

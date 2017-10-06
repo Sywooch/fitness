@@ -28,7 +28,8 @@ class UserController extends ActiveController
             'twitter-auth' => ['POST'],
             'google-auth' => ['POST'],
             'upload-avatar' => ['POST'],
-            'logout' => ['POST']
+            'logout' => ['POST'],
+            'get-user' => ['GET']
         ];
     }
 
@@ -68,7 +69,7 @@ class UserController extends ActiveController
                 ]
             ];
         } else {
-            return $lib->response(400, 'Bad request', $login->getErrors());
+            return $lib->response(400, 'Bad request.', $login->getErrors());
         }
     }
 
@@ -90,7 +91,7 @@ class UserController extends ActiveController
                 ]
             ];
         } else {
-            return $lib->response(400, 'Bad request', $user->getErrors());
+            return $lib->response(400, 'Bad request.', $user->getErrors());
         }
     }
 
@@ -103,7 +104,7 @@ class UserController extends ActiveController
         if(Yii::$app->request->post('facebook_token')){
             return $model->FacebookAuth(Yii::$app->request->post('facebook_token'));
         } else {
-            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+            return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
     }
 
@@ -116,7 +117,7 @@ class UserController extends ActiveController
         if(Yii::$app->request->post('instagram_token')){
             return $model->InstagramAuth(Yii::$app->request->post('instagram_token'));
         } else {
-            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+            return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
     }
 
@@ -129,7 +130,7 @@ class UserController extends ActiveController
         if(Yii::$app->request->post('twitter_token')){
             return $model->TwitterAuth(Yii::$app->request->post('twitter_token'));
         } else {
-            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+            return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
     }
 
@@ -142,7 +143,7 @@ class UserController extends ActiveController
         if(Yii::$app->request->post('google_token')){
             return $model->GoogleAuth(Yii::$app->request->post('google_token'));
         } else {
-            return $lib->response(400, 'Bad request', ['message' => 'Invalid parameters.']);
+            return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
     }
 
@@ -168,7 +169,7 @@ class UserController extends ActiveController
                 'photo' => Yii::$app->params['photo'].$user->avatar
             ];
         } else {
-            $lib->response(400, 'Bad request');
+            $lib->response(400, 'Bad request.');
         }
     }
 
@@ -183,7 +184,24 @@ class UserController extends ActiveController
             $user->save(false);
             return $lib->response(200, 'Successfully logged out');
         } else {
-            return $lib->response(400, 'Bad request');
+            return $lib->response(400, 'Bad request.');
+        }
+    }
+
+    //Get user data
+    public function actionGetUser()
+    {
+        $lib = new Library();
+        $user = Yii::$app->user->identity;
+
+        if(!$user){
+            return $lib->response(403, 'Invalid token.');
+        } else {
+            return [
+                'avatar' => $user->avatar,
+                'background' => $user->background_image,
+                'username' => $user->username
+            ];
         }
     }
     

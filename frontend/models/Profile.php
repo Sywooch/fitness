@@ -3,6 +3,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
 
 
@@ -22,13 +23,11 @@ class Profile extends \yii\db\ActiveRecord
 //            ['email', 'email'],
             [
                 [
-                    'birthday', 'country', 'gender', 'current_weight', 'height', 'desired_weight', 'bust', 'waist',
+                    'current_weight', 'bust', 'waist',
                     'hips', 'thigh', 'forearm', 'chest'
                 ],
                 'required'
             ],
-
-            [['background_image'], 'string', 'max' => 255],
 
             [['user_id'], 'integer']
 
@@ -43,12 +42,12 @@ class Profile extends \yii\db\ActiveRecord
 
         if($request){
             $this->user_id = Yii::$app->user->identity->getId();
-            $this->birthday = $request['birthday'];
-            $this->country = $request['country'];
-            $this->gender = $request['gender'];
+            $user->birthday = $request['birthday'];
+            $user->country = $request['country'];
+            $user->gender = $request['gender'];
             $this->current_weight = $request['current_weight'];
-            $this->height = $request['height'];
-            $this->desired_weight = $request['desired_weight'];
+            $user->height = $request['height'];
+            $user->desired_weight = $request['desired_weight'];
             $this->bust = $request['bust'];
             $this->waist = $request['waist'];
             $this->hips = $request['hips'];
@@ -64,9 +63,11 @@ class Profile extends \yii\db\ActiveRecord
 
             if($upload_background_image) {
                 $upload_background_image->saveAs('background_images/' . $imageName . '.' . $upload_background_image->extension);
-                $this->background_image = 'background_images/' . $imageName . '.' . $upload_background_image->extension;
+                $user->background_image = 'background_images/' . $imageName . '.' . $upload_background_image->extension;
+                $user->save(false);
             } else {
-                $this->background_image = 'Not set';
+                $user->background_image = 'Not set';
+                $user->save(false);
             }
 
             if($upload_avatar) {
@@ -75,6 +76,7 @@ class Profile extends \yii\db\ActiveRecord
                 $user->save(false);
             } else {
                 $user->avatar = 'Not set';
+                $user->save(false);
             }
 
             if(!$this->save()){
@@ -85,22 +87,22 @@ class Profile extends \yii\db\ActiveRecord
                 'token' => $user->auth_key,
                 'user_id' => $user->id,
                 'name' => $user->username,
-                'avatar' => Yii::$app->params['photo'].$user->avatar,
+                'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
                 'email' => $user->email,
                 'profile' => [
-                    'birthday' => $this->birthday,
-                    'country' => $this->country,
-                    'gender' => $this->gender,
+                    'birthday' => $user->birthday,
+                    'country' => $user->country,
+                    'gender' => $user->gender,
                     'current_weight' => $this->current_weight,
-                    'height' => $this->height,
-                    'desired_weight' => $this->desired_weight,
+                    'height' => $user->height,
+                    'desired_weight' => $user->desired_weight,
                     'bust' => $this->bust,
                     'waist' => $this->waist,
                     'hips' => $this->hips,
                     'thigh' => $this->thigh,
                     'forearm' => $this->forearm,
                     'chest' => $this->chest,
-                    'background_image' => Yii::$app->params['photo'].$this->background_image
+                    'background_image' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image
                 ]
             ]);
 
@@ -109,22 +111,47 @@ class Profile extends \yii\db\ActiveRecord
         }
     }
 
-    //Change profile data
-    public function ProfileChange($request)
+    //Add new result
+    public function AddResult($request)
     {
         $lib = new Library();
-        $profile = Yii::$app->user->identity;
+        $user = Yii::$app->user->identity;
+        
+        $this->current_weight = $request['current_weight'];
+        $this->bust = $request['bust'];
+        $this->waist = $request['waist'];
+        $this->hips = $request['hips'];
+        $this->thigh = $request['thigh'];
+        $this->forearm = $request['forearm'];
+        $this->chest = $request['chest'];
+        $this->user_id = $user->getId();
 
-        $profile->username = $request['name'];
-        $profile->email = $request['email'];
+        if($this->save()){
+            return $lib->response(200, 'Successfully added.', $this);
+        } else {
+            return $lib->response(400, 'Bad request.', $this->getErrors());
+        }
+        
+    }
 
-        return $profile->save() ?
-            [
-                'avatar' => $profile->avatar,
-                'name' => $profile->username,
-                'email' => $profile->email
-            ]
-            : $lib->response(400, 'Bad request.', $profile->getErrors());
+    //Get all user results
+    public function GetResults()
+    {
+        $lib = new Library();
+        $user = Yii::$app->user->identity;
+
+        if($user){
+            $dataProvider = new ActiveDataProvider([
+                'query' => Profile::find()->where(['user_id' => $user->getId()]),
+                'pagination' => [
+                    'pageSize' => 10
+                ]
+            ]);
+
+            return $dataProvider;
+        } else {
+            return $lib->response(403, 'Forbidden.', ['error' => 'Invalid token.']);
+        }
     }
 
     //Change/Reset password
