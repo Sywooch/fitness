@@ -198,6 +198,7 @@ class UserController extends ActiveController
             return $lib->response(403, 'Invalid token.');
         } else {
             return [
+                'user_id' => $user->id,
                 'avatar' => $user->avatar,
                 'background' => $user->background_image,
                 'username' => $user->username
