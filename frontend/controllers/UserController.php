@@ -201,7 +201,7 @@ class UserController extends ActiveController
                 'user_id' => $user->id,
                 'avatar' => $user->avatar,
                 'background' => $user->background_image,
-                'username' => $user->username
+                'name' => $user->username
             ];
         }
     }

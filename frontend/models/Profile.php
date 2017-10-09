@@ -102,7 +102,7 @@ class Profile extends \yii\db\ActiveRecord
                     'thigh' => $this->thigh,
                     'forearm' => $this->forearm,
                     'chest' => $this->chest,
-                    'background_image' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image
+                    'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image
                 ]
             ]);
 
