@@ -49,7 +49,7 @@ class ProfilePhoto extends \yii\db\ActiveRecord
     }
 
     //Get all users result photos
-    public function GetResultPhoto()
+    public function GetResultPhoto($result_id)
     {
         $lib = new Library();
         $user = Yii::$app->user->identity;
@@ -58,6 +58,7 @@ class ProfilePhoto extends \yii\db\ActiveRecord
             $dataProvider = new ActiveDataProvider([
                 'query' => ProfilePhoto::find()
                     ->where(['user_id' => $user->getId()])
+                    ->andWhere(['profile_id' => $result_id])
                     ->orderBy(['created_at' => SORT_DESC]),
                 'pagination' => [
                     'pageSize' => 20
