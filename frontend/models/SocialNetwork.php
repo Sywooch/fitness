@@ -41,6 +41,7 @@ class SocialNetwork extends User
                 'message' => 'User has been authorized.',
                 'token' => $exist->auth_key,
                 'user' => [
+                    'user_id' => $exist->id,
                     'avatar' => $exist->avatar,
                     'name' => $exist->username,
                     'email' => $exist->email
@@ -65,6 +66,7 @@ class SocialNetwork extends User
                     'message' => 'User has been authorized.',
                     'token' => $user->auth_key,
                     'user' => [
+                        'user_id' => $user->id,
                         'avatar' => $user->avatar,
                         'name' => $user->username,
                         'email' => $user->email
@@ -141,6 +143,7 @@ class SocialNetwork extends User
                 'message' => 'User has been authorized.',
                 'token' => $exist->auth_key,
                 'user' => [
+                    'user_id' => $exist->id,
                     'avatar' => $exist->avatar,
                     'name' => $exist->username,
                     'email' => $exist->email
@@ -165,6 +168,7 @@ class SocialNetwork extends User
                     'message' => 'User has been authorized.',
                     'token' => $user->auth_key,
                     'user' => [
+                        'user_id' => $user->id,
                         'avatar' => $user->avatar,
                         'name' => $user->username,
                         'email' => $user->email

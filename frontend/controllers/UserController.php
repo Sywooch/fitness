@@ -85,6 +85,7 @@ class UserController extends ActiveController
                 'message' => 'User has been registered.',
                 'token' => $user->auth_key,
                 'user' => [
+                    'user_id' => $user->id,
                     'avatar' => $user->avatar,
                     'name' => $user->username,
                     'email' => $user->email,

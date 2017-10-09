@@ -85,25 +85,14 @@ class Profile extends \yii\db\ActiveRecord
 
             return $lib->response(200, 'Successfully created.', [
                 'token' => $user->auth_key,
+                'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
+                'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image,
+                'email' => $user->email,
+                'birthday' => $user->birthday,
+                'country' => $user->country,
                 'user_id' => $user->id,
                 'name' => $user->username,
-                'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
-                'email' => $user->email,
-                'profile' => [
-                    'birthday' => $user->birthday,
-                    'country' => $user->country,
-                    'gender' => $user->gender,
-                    'current_weight' => $this->current_weight,
-                    'height' => $user->height,
-                    'desired_weight' => $user->desired_weight,
-                    'bust' => $this->bust,
-                    'waist' => $this->waist,
-                    'hips' => $this->hips,
-                    'thigh' => $this->thigh,
-                    'forearm' => $this->forearm,
-                    'chest' => $this->chest,
-                    'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image
-                ]
+                'gender' => $user->gender,
             ]);
 
         } else {
