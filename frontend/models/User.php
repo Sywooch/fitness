@@ -53,13 +53,26 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     //Basic SignUp
     public function register($request)
     {
+        $device = new Device();
+        
         $this->username = $request['name'];
         $this->email = $request['email'];
         $this->setPassword($request['password']);
         $this->avatar = 'Not set';
         $this->generateAuthKey();
 
-        return $this->save();
+        if($this->save()){
+
+            $device->user_id = $this->id;
+            $device->device_token = $request['device_token'];
+            $device->type = $request['type'];
+            $device->save();
+
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 

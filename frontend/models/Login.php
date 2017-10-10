@@ -26,16 +26,28 @@ class Login extends Model
     public function login($request)
     {
         $user = new User();
+        $device = new Device();
         $auth_user = $user->findByEmail($request['email']);
 
         if($auth_user){
             $this->auth_key = $auth_user->auth_key;
             $this->username = $auth_user->username;
+
             if($auth_user->avatar) {
                 if(!preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i', $auth_user->avatar) && file_exists(getcwd().'/'.$auth_user->avatar)){
                     $this->avatar = Yii::$app->params['photo'].$auth_user->avatar;;
                 }
             }
+
+            $token = Device::find()->where(['device_token' => $request['device_token']])->one();
+
+            if(!$token){
+                $device->user_id = $auth_user->id;
+                $device->device_token = $request['device_token'];
+                $device->type = $request['type'];
+                $device->save();
+            }
+
             return true;
         } else {
             return false;

@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use frontend\models\Device;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\web\Response;
@@ -103,7 +104,7 @@ class UserController extends ActiveController
         $lib = new Library();
 
         if(Yii::$app->request->post('facebook_token')){
-            return $model->FacebookAuth(Yii::$app->request->post('facebook_token'));
+            return $model->FacebookAuth(Yii::$app->request->post());
         } else {
             return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
@@ -142,7 +143,7 @@ class UserController extends ActiveController
         $lib = new Library();
 
         if(Yii::$app->request->post('google_token')){
-            return $model->GoogleAuth(Yii::$app->request->post('google_token'));
+            return $model->GoogleAuth(Yii::$app->request->post());
         } else {
             return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
@@ -183,6 +184,12 @@ class UserController extends ActiveController
         if(Yii::$app->request->post('logout') && $user){
             $user->auth_key = Yii::$app->security->generateRandomString();
             $user->save(false);
+            $token = Device::findOne(['device_token' => Yii::$app->request->post('device_token')]);
+
+            if($token){
+                $token->delete();
+            }
+
             return $lib->response(200, 'Successfully logged out');
         } else {
             return $lib->response(400, 'Bad request.');

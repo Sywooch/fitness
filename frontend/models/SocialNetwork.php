@@ -14,11 +14,12 @@ class SocialNetwork extends User
     public $auth_key;
     
     //Login via Facebook
-    public function FacebookAuth($facebook_token)
+    public function FacebookAuth($request)
     {
         $user = new User();
         $lib = new Library();
-        $url = 'https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token='.$facebook_token;
+        $device = new Device();
+        $url = 'https://graph.facebook.com/me?fields=id,name,email,picture.type(large)&access_token='.$request['facebook_token'];
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -35,7 +36,17 @@ class SocialNetwork extends User
             return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
         }
 
+        $token = Device::findOne(['device_token' => $request['device_token']]);
+
         if($exist = $user->findByEmail($result->email)){
+
+            if(!$token){
+                $device->user_id = $exist->id;
+                $device->device_token = $request['device_token'];
+                $device->type = $request['type'];
+                $device->save();
+            }
+
             return [
                 'status' => 200,
                 'message' => 'User has been authorized.',
@@ -61,6 +72,14 @@ class SocialNetwork extends User
             $user->generateAuthKey();
 
             if($user->save()){
+
+                if(!$token){
+                    $device->user_id = $user->id;
+                    $device->device_token = $request['device_token'];
+                    $device->type = $request['type'];
+                    $device->save();
+                }
+
                 return [
                     'status' => 200,
                     'message' => 'User has been authorized.',
@@ -116,11 +135,12 @@ class SocialNetwork extends User
     }
 
     //Login via Google
-    public function GoogleAuth($google_token)
+    public function GoogleAuth($request)
     {
         $user = new User();
         $lib = new Library();
-        $url = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$google_token;
+        $device = new Device();
+        $url = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$request['google_token'];
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -137,7 +157,18 @@ class SocialNetwork extends User
             return $lib->response(204, 'No content', ['error' => 'Invalid token.']);
         }
 
+        $token = Device::findOne(['device_token' => $request['device_token']]);
+
+
         if($exist = $user->findByEmail($result->email)){
+
+            if(!$token){
+                $device->user_id = $exist->id;
+                $device->device_token = $request['device_token'];
+                $device->type = $request['type'];
+                $device->save();
+            }
+
             return [
                 'status' => 200,
                 'message' => 'User has been authorized.',
@@ -163,6 +194,14 @@ class SocialNetwork extends User
             $user->generateAuthKey();
 
             if($user->save()){
+
+                if(!$token){
+                    $device->user_id = $user->id;
+                    $device->device_token = $request['device_token'];
+                    $device->type = $request['type'];
+                    $device->save();
+                }
+
                 return [
                     'status' => 200,
                     'message' => 'User has been authorized.',
