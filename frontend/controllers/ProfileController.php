@@ -24,7 +24,7 @@ class ProfileController extends ActiveController
             'add-result' => ['POST'],
             'add-result-photo' => ['POST'],
             'get-result' => ['GET'],
-            'get-result-photo' => ['POST'],
+            'get-result-photo' => ['GET'],
             'change-password' => ['POST'],
             'reset-password' => ['POST']
         ];
@@ -96,16 +96,11 @@ class ProfileController extends ActiveController
     }
 
     //Get all user result photo by profile id
-    public function actionGetResultPhoto()
+    public function actionGetResultPhoto($result_id)
     {
-        $lib = new Library();
         $model = new ProfilePhoto();
 
-        if(Yii::$app->request->post('result_id')){
-            return $model->GetResultPhoto(Yii::$app->request->post('result_id'));
-        } else {
-            return $lib->response(400, 'Bad request.');
-        }
+        return $model->GetResultPhoto($result_id);
     }
 
     //Change User password
