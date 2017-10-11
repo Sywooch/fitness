@@ -143,6 +143,57 @@ class Profile extends \yii\db\ActiveRecord
         }
     }
 
+    //Change user profile
+    public function ChangeUserProfile($request)
+    {
+        $lib = new Library();
+        $user = Yii::$app->user->identity;
+
+        $user->username = $request['name'];
+        $user->email = $request['email'];
+        $user->gender = $request['gender'];
+        $user->country = $request['country'];
+        $user->birthday = $request['birthday'];
+
+        $upload_background_image = UploadedFile::getInstanceByName("background");
+        $upload_avatar = UploadedFile::getInstanceByName("avatar");
+
+        $imageName = uniqid();
+        $avatarName = uniqid();
+
+        if($upload_background_image) {
+
+            if($user->background_image) {
+                unlink(getcwd().'/'.$user->background_image);
+            }
+
+            $upload_background_image->saveAs('background_images/' . $imageName . '.' . $upload_background_image->extension);
+            $user->background_image = 'background_images/' . $imageName . '.' . $upload_background_image->extension;
+        }
+        
+        if($upload_avatar) {
+            if ($user->avatar) {
+                $lib->CheckUpdateAvatar($user->avatar);
+            }
+            $upload_avatar->saveAs('avatars/' . $avatarName . '.' . $upload_avatar->extension);
+            $user->avatar = 'avatars/' . $avatarName . '.' . $upload_avatar->extension;
+        }
+        
+        if($user->save()){
+            return $lib->response(200, 'Successfully changed.', [
+                'name' => $user->username,
+                'email' => $user->email,
+                'gender' => $user->gender,
+                'country' => $user->country,
+                'birthday' => $user->birthday,
+                'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image,
+                'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
+            ]);
+        } else {
+            return $lib->response(409, 'Can\'t save.', $user->getErrors());
+        }
+    }
+
     //Change/Reset password
     public function sendEmail($user)
     {

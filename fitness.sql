@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 10 2017 г., 13:13
+-- Время создания: Окт 11 2017 г., 16:39
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -84,6 +84,21 @@ CREATE TABLE IF NOT EXISTS `profile_photo` (
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `reminder`
+--
+
+CREATE TABLE IF NOT EXISTS `reminder` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `time` varchar(20) NOT NULL,
+  `reiterate` varchar(100) NOT NULL,
+  `push` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `user`
 --
 
@@ -112,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, `password_hash`, `password_reset_token`, `birthday`, `country`, `gender`, `height`, `desired_weight`, `email`, `status`, `created_at`) VALUES
 (1, 'Admin', NULL, NULL, 'dklsjhgljdfhg', 'skdfhjgbg58yuh', NULL, NULL, NULL, NULL, NULL, NULL, 'prybylov1.v@gmail.com', 0, '2017-09-29 21:00:00'),
 (6, 'Vasya', 'avatars/59d4c655b1ca8.jpg', NULL, 'k9KmzLCa2fVAcLIgm-Mv0ZN6W2DluQvx', '$2y$13$hXgOWEPT5gQtYPSokOeOdOxH50jvq/8T2IXp0ySOBjlajWaolK.me', NULL, NULL, NULL, NULL, NULL, NULL, 'test@gmail.com', 0, '2017-09-30 10:02:24'),
-(9, 'Влад', 'avatars/59cf8e6808ed5.jpg', NULL, 'IMYvMozSGPndkSTfafZZyvJOrZ1g4Qgq', '$2y$13$IhXITN88wklA3vNx6uS45.82e7AWsh3zPWIS.FygAiIAhrh.60Pl6', NULL, NULL, NULL, NULL, NULL, NULL, 'vlad.vasyakot@mail.ru', 0, '2017-09-30 10:37:57'),
+(9, 'ALALA', 'avatars/59de1e971f4fd.jpg', 'background_images/59de1e971f4f9.jpg', 'IMYvMozSGPndkSTfafZZyvJOrZ1g4Qgq', '$2y$13$IhXITN88wklA3vNx6uS45.82e7AWsh3zPWIS.FygAiIAhrh.60Pl6', NULL, '12-12-2010', 'USA', 0, NULL, NULL, 'test.test@test.test', 0, '2017-09-30 10:37:57'),
 (12, 'Максим Снигур', 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/18486023_1892726050945540_2779060632811534807_n.jpg?oh=94616775167ba06dc39bcabb811ea5c1&oe=5A4B1D54', NULL, 'A9a6gk1U_EmK9x1NnjEFjlyMMFm8gxQt', '$2y$13$OlfvIdrnCp6WR7xJa/t8pOHAFM34XhyqdmWvwDPFWirMmzmlb3BkS', NULL, NULL, NULL, NULL, NULL, NULL, 'snigur@16x.zp.ua', 0, '2017-10-02 09:43:59'),
 (13, 'Vasya', 'Not set', NULL, '2jevYFNr6b0nCDqlgOMoBtWGn4Un20bW', '$2y$13$AQihNh1se4Air0UqyoPW6OEDhfgIuv0ZOierxrmNCozDuNdP6KBni', NULL, NULL, NULL, NULL, NULL, NULL, 'test@gmail1.com', 0, '2017-10-10 09:06:22');
 
@@ -142,6 +157,13 @@ ALTER TABLE `profile_photo`
   ADD KEY `profile_photo_ibfk_1` (`profile_id`);
 
 --
+-- Индексы таблицы `reminder`
+--
+ALTER TABLE `reminder`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `reminder_ibfk_1` (`user_id`);
+
+--
 -- Индексы таблицы `user`
 --
 ALTER TABLE `user`
@@ -169,6 +191,11 @@ ALTER TABLE `profile`
 ALTER TABLE `profile_photo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT для таблицы `reminder`
+--
+ALTER TABLE `reminder`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
@@ -194,6 +221,12 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `profile_photo`
   ADD CONSTRAINT `profile_photo_ibfk_1` FOREIGN KEY (`profile_id`) REFERENCES `profile` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `reminder`
+--
+ALTER TABLE `reminder`
+  ADD CONSTRAINT `reminder_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

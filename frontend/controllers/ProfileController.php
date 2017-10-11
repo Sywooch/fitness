@@ -26,7 +26,8 @@ class ProfileController extends ActiveController
             'get-result' => ['GET'],
             'get-result-photo' => ['GET'],
             'change-password' => ['POST'],
-            'reset-password' => ['POST']
+            'reset-password' => ['POST'],
+            'change-user-profile' => ['POST']
         ];
     }
 
@@ -106,8 +107,8 @@ class ProfileController extends ActiveController
     //Change User password
     public function actionChangePassword()
     {
-        $model = new Profile();
         $lib = new Library();
+        $model = new Profile();
 
         if(Yii::$app->request->post('new_password')){
             if($model->sendEmail(Yii::$app->user->identity))
@@ -124,8 +125,8 @@ class ProfileController extends ActiveController
     //Reset User password
     public function actionResetPassword()
     {
-        $model = new Profile();
         $lib = new Library();
+        $model = new Profile();
 
         if(Yii::$app->request->post('email')){
 
@@ -143,6 +144,19 @@ class ProfileController extends ActiveController
 
         } else {
             return $lib->response(400, 'Bad request.');
+        }
+    }
+
+    //Change user profile
+    public function actionChangeUserProfile()
+    {
+        $lib = new Library();
+        $model = new Profile();
+        
+        if(Yii::$app->request->post()){
+            return $model->ChangeUserProfile(Yii::$app->request->post());
+        } else {
+            return $lib->response(400, 'Bad parameters.');
         }
     }
 

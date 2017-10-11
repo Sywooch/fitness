@@ -64,6 +64,7 @@ class UserController extends ActiveController
                 'message' => 'User has been authorized.',
                 'token' => $login->auth_key,
                 'user' => [
+                    'user_id' => $login->user_id,
                     'avatar' => $login->avatar,
                     'name' => $login->username,
                     'email' => $login->email,

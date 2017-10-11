@@ -55,7 +55,8 @@ class SocialNetwork extends User
                     'user_id' => $exist->id,
                     'avatar' => $exist->avatar,
                     'name' => $exist->username,
-                    'email' => $exist->email
+                    'email' => $exist->email,
+                    'user_registered' => 1
                 ]
             ];
         } else {
@@ -88,7 +89,8 @@ class SocialNetwork extends User
                         'user_id' => $user->id,
                         'avatar' => $user->avatar,
                         'name' => $user->username,
-                        'email' => $user->email
+                        'email' => $user->email,
+                        'user_registered' => 0
                     ]
                 ];
             } else {
@@ -177,7 +179,8 @@ class SocialNetwork extends User
                     'user_id' => $exist->id,
                     'avatar' => $exist->avatar,
                     'name' => $exist->username,
-                    'email' => $exist->email
+                    'email' => $exist->email,
+                    'user_registered' => 1
                 ]
             ];
         } else {
@@ -210,7 +213,8 @@ class SocialNetwork extends User
                         'user_id' => $user->id,
                         'avatar' => $user->avatar,
                         'name' => $user->username,
-                        'email' => $user->email
+                        'email' => $user->email,
+                        'user_registered' => 0
                     ]
                 ];
             } else {

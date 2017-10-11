@@ -7,6 +7,7 @@ use yii\base\Model;
 
 class Login extends Model
 {
+    public $user_id;
     public $email;
     public $password;
     public $auth_key;
@@ -30,6 +31,7 @@ class Login extends Model
         $auth_user = $user->findByEmail($request['email']);
 
         if($auth_user){
+            $this->user_id = $auth_user->id;
             $this->auth_key = $auth_user->auth_key;
             $this->username = $auth_user->username;
 
