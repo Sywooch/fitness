@@ -100,27 +100,6 @@ class SocialNetwork extends User
 
     }
 
-    //Login via Instagram
-    public function InstagramAuth($instagram_token)
-    {
-        $user = new User();
-        $lib = new Library();
-        $url = 'https://api.instagram.com/v1/users/self?access_token='.$instagram_token;
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_REFERER, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $result = curl_exec($ch);
-        curl_close($ch);
-        $result = json_decode($result);
-
-        var_dump($result);die;
-    }
-
     //Login via Twitter
     public function TwitterAuth($twitter_token)
     {

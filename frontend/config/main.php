@@ -74,7 +74,6 @@ return [
                 'api/login' => '/user/login',
                 'api/register' => '/user/register',
                 'api/facebook-auth' => '/user/facebook-auth',
-                'api/instagram-auth' => '/user/instagram-auth',
                 'api/twitter-auth' => '/user/twitter-auth',
                 'api/google-auth' => '/user/google-auth',
                 'api/logout' => '/user/logout',

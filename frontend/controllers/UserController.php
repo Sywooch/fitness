@@ -25,7 +25,6 @@ class UserController extends ActiveController
             'login' => ['POST'],
             'register' => ['POST'],
             'facebook-auth' => ['POST'],
-            'instagram-auth' => ['POST'],
             'twitter-auth' => ['POST'],
             'google-auth' => ['POST'],
             'upload-avatar' => ['POST'],
@@ -106,19 +105,6 @@ class UserController extends ActiveController
 
         if(Yii::$app->request->post('facebook_token')){
             return $model->FacebookAuth(Yii::$app->request->post());
-        } else {
-            return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
-        }
-    }
-
-    //Login via Instagram
-    public function actionInstagramAuth()
-    {
-        $model = new SocialNetwork();
-        $lib = new Library();
-
-        if(Yii::$app->request->post('instagram_token')){
-            return $model->InstagramAuth(Yii::$app->request->post('instagram_token'));
         } else {
             return $lib->response(400, 'Bad request.', ['message' => 'Invalid parameters.']);
         }
