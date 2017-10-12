@@ -132,9 +132,7 @@ class Profile extends \yii\db\ActiveRecord
         if($user){
             $dataProvider = new ActiveDataProvider([
                 'query' => Profile::find()->where(['user_id' => $user->getId()]),
-                'pagination' => [
-                    'pageSize' => 10
-                ]
+                'pagination' => false
             ]);
 
             return $dataProvider;
