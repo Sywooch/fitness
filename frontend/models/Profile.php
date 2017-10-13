@@ -161,7 +161,7 @@ class Profile extends \yii\db\ActiveRecord
 
         if($upload_background_image) {
 
-            if($user->background_image) {
+            if($user->background_image && $user->background_image != 'Not set') {
                 unlink(getcwd().'/'.$user->background_image);
             }
 
