@@ -1,10 +1,11 @@
 <?php
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 
 
-class Apns extends Model
+class Push extends Model
 {
 
     private $apns;

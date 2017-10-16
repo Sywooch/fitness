@@ -18,6 +18,15 @@ return [
           ],
     ],
     'components' => [
+        'apns' => [
+            'class' => 'bryglen\apnsgcm\Apns',
+            'environment' => \bryglen\apnsgcm\Apns::ENVIRONMENT_SANDBOX,
+            'pemFile' => dirname(__FILE__).'/apnssert/iFitness.pem',
+            // 'retryTimes' => 3,
+            'options' => [
+                'sendRetryTimes' => 5
+            ]
+        ],
         'log' => [
             'targets' => [
                 [
