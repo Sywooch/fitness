@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 11 2017 г., 16:39
+-- Время создания: Окт 16 2017 г., 11:31
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -31,14 +31,15 @@ CREATE TABLE IF NOT EXISTS `devices` (
   `user_id` int(11) NOT NULL,
   `device_token` varchar(255) NOT NULL,
   `type` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `devices`
 --
 
 INSERT INTO `devices` (`id`, `user_id`, `device_token`, `type`) VALUES
-(2, 13, 'ljshdgi58o7ghoilsgh', 'ios');
+(2, 12, 'ljshdgi58o7ghoilsgh', 'ios'),
+(3, 12, 'sdfgdsfg', 'ios');
 
 -- --------------------------------------------------------
 
@@ -91,10 +92,17 @@ CREATE TABLE IF NOT EXISTS `reminder` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `message` varchar(255) NOT NULL,
-  `time` varchar(20) NOT NULL,
-  `reiterate` varchar(100) NOT NULL,
+  `time` varchar(20) CHARACTER SET utf8 NOT NULL,
+  `reiterate` varchar(100) CHARACTER SET utf8 NOT NULL,
   `push` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `reminder`
+--
+
+INSERT INTO `reminder` (`id`, `user_id`, `message`, `time`, `reiterate`, `push`) VALUES
+(1, 12, 'Test message', '13:48', 'everyday', 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +187,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `profile`
 --
@@ -194,7 +202,7 @@ ALTER TABLE `profile_photo`
 -- AUTO_INCREMENT для таблицы `reminder`
 --
 ALTER TABLE `reminder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
