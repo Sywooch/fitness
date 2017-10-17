@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 16 2017 г., 11:31
+-- Время создания: Окт 17 2017 г., 16:52
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -19,6 +19,29 @@ SET time_zone = "+00:00";
 --
 -- База данных: `fitness`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `activity_category`
+--
+
+CREATE TABLE IF NOT EXISTS `activity_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `activity_category`
+--
+
+INSERT INTO `activity_category` (`id`, `name`, `image`, `created_at`) VALUES
+(1, 'Football', 'category_images/football.jpg', '2017-10-17 13:33:07'),
+(2, 'Basketball', 'category_images/basketball.jpg', '2017-10-17 13:33:07'),
+(3, 'Tennis', 'category_images/tennis.jpg', '2017-10-17 13:34:06'),
+(4, 'Baseball', 'category_images/baseball.jpg', '2017-10-17 13:34:06');
 
 -- --------------------------------------------------------
 
@@ -40,6 +63,29 @@ CREATE TABLE IF NOT EXISTS `devices` (
 INSERT INTO `devices` (`id`, `user_id`, `device_token`, `type`) VALUES
 (2, 12, 'ljshdgi58o7ghoilsgh', 'ios'),
 (3, 12, 'sdfgdsfg', 'ios');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `food_category`
+--
+
+CREATE TABLE IF NOT EXISTS `food_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `food_category`
+--
+
+INSERT INTO `food_category` (`id`, `name`, `image`, `created_at`) VALUES
+(1, 'Fish', 'category_images/fish.jpg', '2017-10-17 13:23:11'),
+(2, 'Meat', 'category_images/meat.jpg', '2017-10-17 13:23:11'),
+(3, 'Bread', 'category_images/bread.jpg', '2017-10-17 13:23:37'),
+(4, 'Milk', 'category_images/milk.jpg', '2017-10-17 13:23:55');
 
 -- --------------------------------------------------------
 
@@ -144,11 +190,23 @@ INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, 
 --
 
 --
+-- Индексы таблицы `activity_category`
+--
+ALTER TABLE `activity_category`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `devices`
 --
 ALTER TABLE `devices`
   ADD PRIMARY KEY (`id`),
   ADD KEY `devices_ibfk_1` (`user_id`);
+
+--
+-- Индексы таблицы `food_category`
+--
+ALTER TABLE `food_category`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `profile`
@@ -184,10 +242,20 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `activity_category`
+--
+ALTER TABLE `activity_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT для таблицы `devices`
 --
 ALTER TABLE `devices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT для таблицы `food_category`
+--
+ALTER TABLE `food_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `profile`
 --

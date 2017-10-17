@@ -90,7 +90,9 @@ return [
                 'api/add-reminder' => '/reminder/add-reminder',
                 'api/get-reminder' => '/reminder/get-reminder',
                 'api/change-reminder' => '/reminder/change-reminder',
-                'api/delete-reminder' => '/reminder/delete-reminder'
+                'api/delete-reminder' => '/reminder/delete-reminder',
+                'api/food-category' => '/category/food-category',
+                'api/activity-category' => '/category/activity-category'
                 
             ],
         ],
