@@ -39,9 +39,7 @@ class Reminder extends \yii\db\ActiveRecord
     {
         $dataProvider = new ActiveDataProvider([
             'query' => static::find()->where(['user_id' => Yii::$app->user->identity->getId()]),
-            'pagination' => [
-                'pageSize' => 20
-            ]
+            'pagination' => false
         ]);
 
         return $dataProvider;
