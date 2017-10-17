@@ -30,7 +30,7 @@ class ActivityCategory extends \yii\db\ActiveRecord
             'pagination' => false
         ]);
 
-        $query->andFilterWhere(['like', 'name', $params['name']]);
+        $query->andFilterWhere(['like', 'name', isset($params['name']) ? $params['name'] : '']);
 
         return $dataProvider;
     }
