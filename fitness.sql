@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 17 2017 г., 16:52
+-- Время создания: Окт 18 2017 г., 13:57
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -19,6 +19,34 @@ SET time_zone = "+00:00";
 --
 -- База данных: `fitness`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `activity`
+--
+
+CREATE TABLE IF NOT EXISTS `activity` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `activity_category_id` int(11) NOT NULL,
+  `working_weight` varchar(255) NOT NULL,
+  `number_of_approaches` varchar(255) NOT NULL,
+  `number_of_repetitions` varchar(255) NOT NULL,
+  `interval_between_approaches` varchar(255) NOT NULL,
+  `technique` varchar(255) NOT NULL,
+  `important` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `activity`
+--
+
+INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `important`, `image`, `created_at`) VALUES
+(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', 'Not dropping down low enough', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
+(2, 'Activity_2', 2, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', 'Not dropping down low enough', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
 
 -- --------------------------------------------------------
 
@@ -63,6 +91,29 @@ CREATE TABLE IF NOT EXISTS `devices` (
 INSERT INTO `devices` (`id`, `user_id`, `device_token`, `type`) VALUES
 (2, 12, 'ljshdgi58o7ghoilsgh', 'ios'),
 (3, 12, 'sdfgdsfg', 'ios');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `food`
+--
+
+CREATE TABLE IF NOT EXISTS `food` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `food_category_id` int(11) NOT NULL,
+  `directions` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `food`
+--
+
+INSERT INTO `food` (`id`, `name`, `food_category_id`, `directions`, `image`, `created_at`) VALUES
+(1, 'Food_1', 1, 'Some text', 'food_images/food-712665_960_720.jpg', '2017-10-18 10:42:35'),
+(2, 'Food_2', 2, 'Some directions', 'photo-70497.jpg', '2017-10-18 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -190,6 +241,13 @@ INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, 
 --
 
 --
+-- Индексы таблицы `activity`
+--
+ALTER TABLE `activity`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `activity_ibfk_1` (`activity_category_id`);
+
+--
 -- Индексы таблицы `activity_category`
 --
 ALTER TABLE `activity_category`
@@ -201,6 +259,13 @@ ALTER TABLE `activity_category`
 ALTER TABLE `devices`
   ADD PRIMARY KEY (`id`),
   ADD KEY `devices_ibfk_1` (`user_id`);
+
+--
+-- Индексы таблицы `food`
+--
+ALTER TABLE `food`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `food_ibfk_1` (`food_category_id`);
 
 --
 -- Индексы таблицы `food_category`
@@ -242,6 +307,11 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT для таблицы `activity`
+--
+ALTER TABLE `activity`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT для таблицы `activity_category`
 --
 ALTER TABLE `activity_category`
@@ -251,6 +321,11 @@ ALTER TABLE `activity_category`
 --
 ALTER TABLE `devices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT для таблицы `food`
+--
+ALTER TABLE `food`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `food_category`
 --
@@ -281,10 +356,22 @@ ALTER TABLE `user`
 --
 
 --
+-- Ограничения внешнего ключа таблицы `activity`
+--
+ALTER TABLE `activity`
+  ADD CONSTRAINT `activity_ibfk_1` FOREIGN KEY (`activity_category_id`) REFERENCES `activity_category` (`id`) ON DELETE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `devices`
 --
 ALTER TABLE `devices`
   ADD CONSTRAINT `devices_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `food`
+--
+ALTER TABLE `food`
+  ADD CONSTRAINT `food_ibfk_1` FOREIGN KEY (`food_category_id`) REFERENCES `food_category` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `profile`

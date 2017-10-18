@@ -92,7 +92,11 @@ return [
                 'api/change-reminder' => '/reminder/change-reminder',
                 'api/delete-reminder' => '/reminder/delete-reminder',
                 'api/food-category' => '/category/food-category',
-                'api/activity-category' => '/category/activity-category'
+                'api/activity-category' => '/category/activity-category',
+                'api/activity-by-category' => '/activity/get-activity-by-category',
+                'api/activity-by-id' => '/activity/get-activity-by-id',
+                'api/food-by-category' => '/food/get-food-by-category',
+                'api/food-by-id' => '/food/get-food-by-id',
                 
             ],
         ],
