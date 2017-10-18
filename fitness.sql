@@ -2,9 +2,9 @@
 -- version 4.4.15.7
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1:3306
--- Время создания: Окт 18 2017 г., 13:57
--- Версия сервера: 5.6.31
+-- Хост: 127.0.0.1:3307
+-- Время создания: Окт 18 2017 г., 18:30
+-- Версия сервера: 5.5.50
 -- Версия PHP: 5.6.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -36,6 +36,8 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `interval_between_approaches` varchar(255) NOT NULL,
   `technique` varchar(255) NOT NULL,
   `important` varchar(255) DEFAULT NULL,
+  `cal` varchar(50) DEFAULT NULL,
+  `fats` varchar(50) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -44,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `activity` (
 -- Дамп данных таблицы `activity`
 --
 
-INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `important`, `image`, `created_at`) VALUES
-(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', 'Not dropping down low enough', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
-(2, 'Activity_2', 2, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', 'Not dropping down low enough', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
+INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `important`, `cal`, `fats`, `image`, `created_at`) VALUES
+(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', 'Not dropping down low enough', '33', '50', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
+(2, 'Activity_2', 1, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', 'Not dropping down low enough', '52', '113', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
 
 -- --------------------------------------------------------
 
@@ -102,6 +104,11 @@ CREATE TABLE IF NOT EXISTS `food` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `food_category_id` int(11) NOT NULL,
+  `cal` varchar(50) NOT NULL,
+  `grams` varchar(50) NOT NULL,
+  `proteins` varchar(50) NOT NULL,
+  `fats` varchar(50) NOT NULL,
+  `carbohydrates` varchar(50) NOT NULL,
   `directions` text NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
@@ -111,9 +118,9 @@ CREATE TABLE IF NOT EXISTS `food` (
 -- Дамп данных таблицы `food`
 --
 
-INSERT INTO `food` (`id`, `name`, `food_category_id`, `directions`, `image`, `created_at`) VALUES
-(1, 'Food_1', 1, 'Some text', 'food_images/food-712665_960_720.jpg', '2017-10-18 10:42:35'),
-(2, 'Food_2', 2, 'Some directions', 'photo-70497.jpg', '2017-10-18 10:42:35');
+INSERT INTO `food` (`id`, `name`, `food_category_id`, `cal`, `grams`, `proteins`, `fats`, `carbohydrates`, `directions`, `image`, `created_at`) VALUES
+(1, 'Food_1', 1, '500', '1000', '100', '33', '11', 'Some text', 'food_images/food-712665_960_720.jpg', '2017-10-18 10:42:35'),
+(2, 'Food_2', 1, '410', '450', '97', '58', '19', 'Some directions', 'photo-70497.jpg', '2017-10-18 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -137,6 +144,28 @@ INSERT INTO `food_category` (`id`, `name`, `image`, `created_at`) VALUES
 (2, 'Meat', 'category_images/meat.jpg', '2017-10-17 13:23:11'),
 (3, 'Bread', 'category_images/bread.jpg', '2017-10-17 13:23:37'),
 (4, 'Milk', 'category_images/milk.jpg', '2017-10-17 13:23:55');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `news`
+--
+
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `news`
+--
+
+INSERT INTO `news` (`id`, `title`, `description`, `image`, `created_at`) VALUES
+(1, 'New Car', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 'news_images/Sports_Car_Front_View-512.png', '2017-10-18 15:30:15'),
+(2, 'Paper', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 'news_images/News.jpg', '2017-10-18 15:30:15');
 
 -- --------------------------------------------------------
 
@@ -274,6 +303,12 @@ ALTER TABLE `food_category`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Индексы таблицы `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `profile`
 --
 ALTER TABLE `profile`
@@ -331,6 +366,11 @@ ALTER TABLE `food`
 --
 ALTER TABLE `food_category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT для таблицы `news`
+--
+ALTER TABLE `news`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `profile`
 --

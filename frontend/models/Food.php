@@ -17,9 +17,10 @@ class Food extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'food_category_id', 'directions'], 'required'],
+            [['name', 'food_category_id', 'directions', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates'], 'required'],
             [['directions'], 'string'],
             [['image', 'name'], 'string', 'max' => 255],
+            [['cal', 'grams', 'proteins', 'fats', 'carbohydrates'], 'string', 'max' => 50],
             [['food_category_id'], 'integer']
         ];
     }
@@ -29,6 +30,9 @@ class Food extends \yii\db\ActiveRecord
     {
         $dataProvider = new ActiveDataProvider([
             'query' => static::find()
+                ->select([
+                    'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                ])
                 ->where(['food_category_id' => $category_id])
                 ->orderBy(['created_at' => SORT_DESC]),
             'pagination' => false
