@@ -18,7 +18,7 @@ class Food extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'food_category_id', 'directions', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates'], 'required'],
-            [['directions'], 'string'],
+            [['directions', 'specification'], 'string'],
             [['image', 'name'], 'string', 'max' => 255],
             [['cal', 'grams', 'proteins', 'fats', 'carbohydrates'], 'string', 'max' => 50],
             [['food_category_id'], 'integer']
@@ -57,19 +57,19 @@ class Food extends \yii\db\ActiveRecord
         if($time == 'breakfast'){
             $query = Food::find()
             ->select([
-                'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
             ])
             ->orderBy(['rand()' => SORT_DESC]);
         } elseif($time == 'dinner'){
             $query = Food::find()
                 ->select([
-                    'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
                 ])
                 ->orderBy(['rand()' => SORT_DESC]);
         } elseif($time == 'launch'){
             $query = Food::find()
                 ->select([
-                    'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
                 ])
                 ->orderBy(['rand()' => SORT_DESC]);
         }
