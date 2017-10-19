@@ -49,4 +49,41 @@ class Food extends \yii\db\ActiveRecord
         return $query;
     }
 
+    //Get recommended food for user
+    public function Ingestion($time)
+    {
+        $lib = new Library();
+
+        if($time == 'breakfast'){
+            $query = Food::find()
+            ->select([
+                'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+            ])
+            ->orderBy(['rand()' => SORT_DESC]);
+        } elseif($time == 'dinner'){
+            $query = Food::find()
+                ->select([
+                    'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                ])
+                ->orderBy(['rand()' => SORT_DESC]);
+        } elseif($time == 'launch'){
+            $query = Food::find()
+                ->select([
+                    'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
+                ])
+                ->orderBy(['rand()' => SORT_DESC]);
+        }
+
+        if(isset($query)){
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => false
+            ]);
+
+            return $dataProvider;
+        } else {
+            return $lib->response(404, 'Not found');
+        }
+    }
 }

@@ -97,6 +97,7 @@ return [
                 'api/activity-by-id' => '/activity/get-activity-by-id',
                 'api/food-by-category' => '/food/get-food-by-category',
                 'api/food-by-id' => '/food/get-food-by-id',
+                'api/recommend-food' => '/food/recommend-food',
                 'api/news' => '/news/all-news',
                 
             ],
