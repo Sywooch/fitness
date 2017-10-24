@@ -200,7 +200,8 @@ class UserController extends ActiveController
                 'email' => $user->email,
                 'gender' => $user->gender,
                 'country' => $user->country,
-                'birthday' => $user->birthday
+                'birthday' => $user->birthday,
+                'height' => $user->height
             ];
         }
     }
