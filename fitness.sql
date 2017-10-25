@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 25 2017 г., 10:07
+-- Время создания: Окт 25 2017 г., 15:54
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -288,6 +288,28 @@ INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, 
 (12, 'Максим Снигур', 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/18486023_1892726050945540_2779060632811534807_n.jpg?oh=94616775167ba06dc39bcabb811ea5c1&oe=5A4B1D54', NULL, 'A9a6gk1U_EmK9x1NnjEFjlyMMFm8gxQt', '$2y$13$OlfvIdrnCp6WR7xJa/t8pOHAFM34XhyqdmWvwDPFWirMmzmlb3BkS', NULL, NULL, NULL, NULL, NULL, NULL, 'snigur@16x.zp.ua', 0, '2017-10-02 09:43:59'),
 (13, 'Vasya', 'Not set', NULL, '2jevYFNr6b0nCDqlgOMoBtWGn4Un20bW', '$2y$13$AQihNh1se4Air0UqyoPW6OEDhfgIuv0ZOierxrmNCozDuNdP6KBni', NULL, NULL, NULL, NULL, NULL, NULL, 'test@gmail1.com', 0, '2017-10-10 09:06:22');
 
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `water`
+--
+
+CREATE TABLE IF NOT EXISTS `water` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `cup` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `water`
+--
+
+INSERT INTO `water` (`id`, `user_id`, `cup`, `created_at`) VALUES
+(3, 6, 1, '2017-10-25 12:38:11'),
+(4, 6, 1, '2017-10-25 12:38:11'),
+(5, 6, -1, '2017-10-25 12:38:23');
+
 --
 -- Индексы сохранённых таблиц
 --
@@ -369,6 +391,13 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
 --
+-- Индексы таблицы `water`
+--
+ALTER TABLE `water`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `water_ibfk_1` (`user_id`);
+
+--
 -- AUTO_INCREMENT для сохранённых таблиц
 --
 
@@ -428,6 +457,11 @@ ALTER TABLE `reminder`
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
+-- AUTO_INCREMENT для таблицы `water`
+--
+ALTER TABLE `water`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
@@ -473,6 +507,12 @@ ALTER TABLE `profile_photo`
 --
 ALTER TABLE `reminder`
   ADD CONSTRAINT `reminder_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `water`
+--
+ALTER TABLE `water`
+  ADD CONSTRAINT `water_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
