@@ -99,6 +99,8 @@ return [
                 'api/food-by-id' => '/food/get-food-by-id',
                 'api/recommend-food' => '/food/recommend-food',
                 'api/news' => '/news/all-news',
+                'api/add-exercise' => '/exercise/add-exercise',
+                'api/get-day-exercises' => '/exercise/get-day-exercises'
                 
             ],
         ],
