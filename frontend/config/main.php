@@ -101,8 +101,10 @@ return [
                 'api/news' => '/news/all-news',
                 'api/add-exercise' => '/exercise/add-exercise',
                 'api/get-day-exercises' => '/exercise/get-day-exercises',
+                'api/exercises-by-date' => '/exercise/exercises-by-date',
                 'api/add-water' => '/water/add-water',
-                'api/get-day-water' => '/water/get-day-water'
+                'api/get-day-water' => '/water/get-day-water',
+                'api/water-by-date' => '/water/water-by-date' 
                 
             ],
         ],

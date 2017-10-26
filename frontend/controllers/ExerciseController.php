@@ -20,7 +20,8 @@ class ExerciseController extends ActiveController
     {
         return [
             'add-exercise' => ['POST'],
-            'get-day-exercises' => ['GET']
+            'get-day-exercises' => ['GET'],
+            'exercises-by-date' => ['GET']
         ];
     }
 
@@ -59,6 +60,14 @@ class ExerciseController extends ActiveController
         $model = new Exercise();
         
         return $model->DayExercises();
+    }
+
+    //Get all exercises by date
+    public function actionExercisesByDate($date)
+    {
+        $model = new Exercise();
+
+        return $model->ExercisesByDate($date);
     }
 
 }

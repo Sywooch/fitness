@@ -20,7 +20,8 @@ class WaterController extends ActiveController
     {
         return [
             'add-water' => ['POST'],
-            'get-day-water' => ['GET']
+            'get-day-water' => ['GET'],
+            'water-by-date' => ['GET']
         ];
     }
 
@@ -60,6 +61,14 @@ class WaterController extends ActiveController
         $model = new Water();
         
         return $model->DayWater();
+    }
+
+    //Get count couples of water by date
+    public function actionWaterByDate($date)
+    {
+        $model = new Water();
+
+        return $model->WaterByDate($date);
     }
 
 }

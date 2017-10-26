@@ -42,4 +42,22 @@ class Exercise extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+    //Get all user exercises for the current day
+    public function ExercisesByDate($date)
+    {
+        $user = Yii::$app->user->identity->getId();
+
+        $dataProvider = new SqlDataProvider([
+            'sql' => "SELECT exercises.id AS exercises_id, user_id, activity_category.image, activity_category.name AS category_name, min, burned_cal, daily_goal
+                    FROM exercises
+                    INNER JOIN activity_category ON activity_category.id = exercises.activity_category_id
+                    WHERE user_id = $user AND DATE(exercises.created_at) = $date
+                    ORDER BY exercises.created_at DESC
+                    ",
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
+    }
+
 }
