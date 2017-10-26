@@ -33,7 +33,7 @@ class Water extends \yii\db\ActiveRecord
             ->sum('cup');
 
         return [
-            'count_cups' => $couple_count != null ? $couple_count : 0,
+            'count_cups' => $couple_count != null && $couple_count > 0 ? $couple_count : 0,
             'user_id' => $user_id,
             'created_at' => date('Y-m-d')
         ];
