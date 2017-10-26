@@ -104,7 +104,7 @@ return [
                 'api/exercises-by-date' => '/exercise/exercises-by-date',
                 'api/add-water' => '/water/add-water',
                 'api/get-day-water' => '/water/get-day-water',
-                'api/water-by-date' => '/water/water-by-date' 
+                'api/water-by-date' => '/water/water-by-date'
                 
             ],
         ],

@@ -42,7 +42,7 @@ class Exercise extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
-    //Get all user exercises for the current day
+    //Get all user exercises for date
     public function ExercisesByDate($date)
     {
         $user = Yii::$app->user->identity->getId();
