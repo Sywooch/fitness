@@ -19,7 +19,7 @@ class ActivityController extends ActiveController
     protected function verbs()
     {
         return [
-            'get-activity-by-category' => ['GET'],
+            'recommend-activity' => ['GET'],
             'get-activity-by-id' => ['GET'],
         ];
     }
@@ -36,11 +36,11 @@ class ActivityController extends ActiveController
     }
 
     //get all activities by category_id
-    public function actionGetActivityByCategory($category_id)
+    public function actionRecommendActivity()
     {
         $model = new Activity();
         
-        return $model->ActivityByCategory($category_id); 
+        return $model->RecommendActivity(); 
     }
     
     //get activity information by id

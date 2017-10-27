@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 25 2017 г., 15:54
+-- Время создания: Окт 27 2017 г., 10:57
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `number_of_repetitions` varchar(255) NOT NULL,
   `interval_between_approaches` varchar(255) NOT NULL,
   `technique` varchar(255) NOT NULL,
+  `training_time` varchar(50) NOT NULL,
+  `specification` text NOT NULL,
   `important` varchar(255) DEFAULT NULL,
   `cal` varchar(50) DEFAULT NULL,
   `fats` varchar(50) DEFAULT NULL,
@@ -46,9 +48,9 @@ CREATE TABLE IF NOT EXISTS `activity` (
 -- Дамп данных таблицы `activity`
 --
 
-INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `important`, `cal`, `fats`, `image`, `created_at`) VALUES
-(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', 'Not dropping down low enough', '33', '50', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
-(2, 'Activity_2', 1, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', 'Not dropping down low enough', '52', '113', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
+INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `training_time`, `specification`, `important`, `cal`, `fats`, `image`, `created_at`) VALUES
+(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', '15 min', 'Some specification', 'Not dropping down low enough', '33', '50', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
+(2, 'Activity_2', 1, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', '25 min', 'Specification', 'Not dropping down low enough', '52', '113', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
 
 -- --------------------------------------------------------
 
@@ -108,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `exercises` (
   `burned_cal` double NOT NULL,
   `daily_goal` double NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `exercises`
@@ -420,7 +422,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT для таблицы `exercises`
 --
 ALTER TABLE `exercises`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `food`
 --
