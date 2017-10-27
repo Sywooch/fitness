@@ -55,7 +55,7 @@ class Profile extends \yii\db\ActiveRecord
             $this->forearm = $request['forearm'];
             $this->chest = $request['chest'];
 
-            $upload_background_image = UploadedFile::getInstanceByName("background_image");
+            $upload_background_image = UploadedFile::getInstanceByName("background");
             $upload_avatar = UploadedFile::getInstanceByName("avatar");
             
             $imageName = uniqid();
