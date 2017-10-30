@@ -52,7 +52,7 @@ class Water extends \yii\db\ActiveRecord
         return [
             'count_cups' => $couple_count != null && $couple_count > 0 ? $couple_count : 0,
             'user_id' => $user_id,
-            'created_at' => $date
+            'created_at' => str_replace('\'', '', $date)
         ];
     }
 

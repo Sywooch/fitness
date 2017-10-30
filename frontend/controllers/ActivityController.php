@@ -50,6 +50,6 @@ class ActivityController extends ActiveController
 
         return $model->ActivityById($id);
     }
-    
+
 
 }

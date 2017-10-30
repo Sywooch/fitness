@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 27 2017 г., 10:57
+-- Время создания: Окт 30 2017 г., 18:04
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -293,6 +293,31 @@ INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, 
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `user_food`
+--
+
+CREATE TABLE IF NOT EXISTS `user_food` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `food_category_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `protein` double NOT NULL,
+  `fat` double NOT NULL,
+  `carbs` double NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `user_food`
+--
+
+INSERT INTO `user_food` (`id`, `user_id`, `food_category_id`, `product_name`, `protein`, `fat`, `carbs`, `created_at`) VALUES
+(1, 6, 1, 'Some product', 33, 29, 12, '2017-10-30 14:43:59'),
+(2, 6, 1, 'Some product', 33, 29, 12, '2017-10-30 14:44:24');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `water`
 --
 
@@ -393,6 +418,14 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
 --
+-- Индексы таблицы `user_food`
+--
+ALTER TABLE `user_food`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_food_ibfk_1` (`user_id`),
+  ADD KEY `user_food_ibfk_2` (`food_category_id`);
+
+--
 -- Индексы таблицы `water`
 --
 ALTER TABLE `water`
@@ -459,6 +492,11 @@ ALTER TABLE `reminder`
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
+-- AUTO_INCREMENT для таблицы `user_food`
+--
+ALTER TABLE `user_food`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT для таблицы `water`
 --
 ALTER TABLE `water`
@@ -509,6 +547,13 @@ ALTER TABLE `profile_photo`
 --
 ALTER TABLE `reminder`
   ADD CONSTRAINT `reminder_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `user_food`
+--
+ALTER TABLE `user_food`
+  ADD CONSTRAINT `user_food_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_food_ibfk_2` FOREIGN KEY (`food_category_id`) REFERENCES `food_category` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `water`
