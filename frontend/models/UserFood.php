@@ -18,10 +18,10 @@ class UserFood extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['food_category_id', 'product_name', 'protein', 'fat', 'carbs'], 'required'],
+            [['food_category_id', 'product_name', 'protein', 'fat', 'carbs', 'kcal', 'gram'], 'required'],
             [['user_id', 'food_category_id'], 'integer'],
             [['product_name'], 'string', 'max' => 255],
-            [['protein', 'fat', 'carbs'], 'number']
+            [['protein', 'fat', 'carbs', 'kcal', 'gram'], 'number']
         ];
     }
 
@@ -31,7 +31,7 @@ class UserFood extends \yii\db\ActiveRecord
         $user_id = Yii::$app->user->identity->getId();
 
         $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT food_category_id, user_id, food_category.image, product_name, protein, fat, carbs, user_food.created_at
+            'sql' => "SELECT food_category_id, user_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
                     FROM user_food
                     INNER JOIN food_category ON food_category.id = user_food.food_category_id
                     WHERE user_id = $user_id AND DATE(user_food.created_at) = CURDATE()

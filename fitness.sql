@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 30 2017 г., 18:04
+-- Время создания: Окт 30 2017 г., 19:20
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -304,6 +304,8 @@ CREATE TABLE IF NOT EXISTS `user_food` (
   `protein` double NOT NULL,
   `fat` double NOT NULL,
   `carbs` double NOT NULL,
+  `kcal` double NOT NULL,
+  `gram` double NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -311,9 +313,9 @@ CREATE TABLE IF NOT EXISTS `user_food` (
 -- Дамп данных таблицы `user_food`
 --
 
-INSERT INTO `user_food` (`id`, `user_id`, `food_category_id`, `product_name`, `protein`, `fat`, `carbs`, `created_at`) VALUES
-(1, 6, 1, 'Some product', 33, 29, 12, '2017-10-30 14:43:59'),
-(2, 6, 1, 'Some product', 33, 29, 12, '2017-10-30 14:44:24');
+INSERT INTO `user_food` (`id`, `user_id`, `food_category_id`, `product_name`, `protein`, `fat`, `carbs`, `kcal`, `gram`, `created_at`) VALUES
+(1, 6, 1, 'Some product', 33, 29, 12, 23, 150, '2017-10-30 14:43:59'),
+(2, 6, 1, 'Some product', 33, 29, 12, 18, 210, '2017-10-30 14:44:24');
 
 -- --------------------------------------------------------
 
