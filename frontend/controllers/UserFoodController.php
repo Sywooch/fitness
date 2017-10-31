@@ -20,7 +20,8 @@ class UserFoodController extends ActiveController
     {
         return [
             'add-food' => ['POST'],
-            'day-food' => ['GET']
+            'day-food' => ['GET'],
+            'food-by-date' => ['GET']
         ];
     }
 
@@ -60,6 +61,14 @@ class UserFoodController extends ActiveController
         $model = new UserFood();
         
         return $model->DayFood();
+    }
+
+    //Get all user food by date
+    public function actionFoodByDate($date)
+    {
+        $model = new UserFood();
+
+        return $model->DateFood($date);
     }
 
 }

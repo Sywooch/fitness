@@ -43,4 +43,22 @@ class UserFood extends \yii\db\ActiveRecord
         return $dataProvider;
     }
 
+    //Get all user food by date
+    public function DateFood($date)
+    {
+        $user_id = Yii::$app->user->identity->getId();
+
+        $dataProvider = new SqlDataProvider([
+            'sql' => "SELECT food_category_id, user_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
+                    FROM user_food
+                    INNER JOIN food_category ON food_category.id = user_food.food_category_id
+                    WHERE user_id = $user_id AND DATE(user_food.created_at) = $date
+                    ORDER BY user_food.created_at DESC
+                    ",
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
+    }
+
 }

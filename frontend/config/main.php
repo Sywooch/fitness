@@ -100,6 +100,7 @@ return [
                 'api/recommend-food' => '/food/recommend-food',
                 'api/add-food' => '/user-food/add-food',
                 'api/day-food' => '/user-food/day-food',
+                'api/food-by-date' => 'user-food/food-by-date',
                 'api/news' => '/news/all-news',
                 'api/add-exercise' => '/exercise/add-exercise',
                 'api/get-day-exercises' => '/exercise/get-day-exercises',
