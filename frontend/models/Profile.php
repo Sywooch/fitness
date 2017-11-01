@@ -29,7 +29,7 @@ class Profile extends \yii\db\ActiveRecord
                 'required'
             ],
 
-            [['user_id'], 'integer']
+            [['user_id', 'lifestyle', 'target'], 'integer']
 
         ];
     }
@@ -48,12 +48,15 @@ class Profile extends \yii\db\ActiveRecord
             $this->current_weight = $request['current_weight'];
             $user->height = $request['height'];
             $user->desired_weight = $request['desired_weight'];
+            $user->lifestyle = $request['lifestyle'];
+            $user->target = $request['target'];
             $this->bust = $request['bust'];
             $this->waist = $request['waist'];
             $this->hips = $request['hips'];
             $this->thigh = $request['thigh'];
             $this->forearm = $request['forearm'];
             $this->chest = $request['chest'];
+
 
             $upload_background_image = UploadedFile::getInstanceByName("background");
             $upload_avatar = UploadedFile::getInstanceByName("avatar");
@@ -93,6 +96,8 @@ class Profile extends \yii\db\ActiveRecord
                 'user_id' => $user->id,
                 'name' => $user->username,
                 'gender' => $user->gender,
+                'lifestyle' => $user->lifestyle,
+                'target' => $user->target
             ]);
 
         } else {
@@ -152,6 +157,8 @@ class Profile extends \yii\db\ActiveRecord
         $user->gender = $request['gender'];
         $user->country = $request['country'];
         $user->birthday = $request['birthday'];
+        $user->lifestyle = $request['lifestyle'];
+        $user->target = $request['target'];
 
         $upload_background_image = UploadedFile::getInstanceByName("background");
         $upload_avatar = UploadedFile::getInstanceByName("avatar");
@@ -186,6 +193,8 @@ class Profile extends \yii\db\ActiveRecord
                 'birthday' => $user->birthday,
                 'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image,
                 'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
+                'lifestyle' => $user->lifestyle,
+                'target' => $user->target
             ]);
         } else {
             return $lib->response(409, 'Can\'t save.', $user->getErrors());
