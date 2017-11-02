@@ -47,7 +47,7 @@ class ExerciseController extends ActiveController
             if($model->save()){
                 return $lib->response(200, 'Successfully added.', $model);
             } else {
-                return $lib->response(500, 'Can\'t save exercise.', $model->getErrors());
+                return $lib->response(409, 'Can\'t save exercise.', $model->getErrors());
             }
         } else {
             return $lib->response(400, 'Bad request.');

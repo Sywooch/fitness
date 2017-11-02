@@ -48,7 +48,7 @@ class WaterController extends ActiveController
             if($model->save()){
                 return $lib->response(200, 'Successfully added.');
             } else {
-                return $lib->response(500, 'Can\'t save.', $model->getErrors());
+                return $lib->response(409, 'Can\'t save.', $model->getErrors());
             }
         } else {
             return $lib->response(400, 'Bad request.');
