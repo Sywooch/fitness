@@ -29,7 +29,7 @@ class Profile extends \yii\db\ActiveRecord
                 'required'
             ],
 
-            [['user_id', 'lifestyle', 'target'], 'integer']
+            [['user_id'], 'integer']
 
         ];
     }
