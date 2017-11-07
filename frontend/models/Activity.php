@@ -33,7 +33,9 @@ class Activity extends \yii\db\ActiveRecord
                     'id', 'name', 'cal', 'training_time', 'specification', 'image'
                 ])
                 ->orderBy(['created_at' => SORT_DESC]),
-            'pagination' => false
+            'pagination' => [
+                'pageSize' => 20
+            ]
         ]);
 
         return $dataProvider;

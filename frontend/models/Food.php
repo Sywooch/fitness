@@ -78,7 +78,9 @@ class Food extends \yii\db\ActiveRecord
 
             $dataProvider = new ActiveDataProvider([
                 'query' => $query,
-                'pagination' => false
+                'pagination' => [
+                    'pageSize' => 20
+                ]
             ]);
 
             return $dataProvider;
