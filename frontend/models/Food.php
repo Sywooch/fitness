@@ -88,4 +88,24 @@ class Food extends \yii\db\ActiveRecord
             return $lib->response(404, 'Not found');
         }
     }
+
+    //Food search in category
+    public function FoodCategorySearch($category_id, $product_name)
+    {
+        $query = static::find()
+            ->select(['id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'])
+            ->orderBy(['created_at' => SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 20
+            ]
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $product_name])
+            ->andWhere(['food_category_id' => $category_id]);
+
+        return $dataProvider;
+    }
 }

@@ -21,7 +21,8 @@ class FoodController extends ActiveController
         return [
             'get-food-by-category' => ['GET'],
             'get-food-by-id' => ['GET'],
-            'recommend-food' => ['GET']
+            'recommend-food' => ['GET'],
+            'food-category-search' => ['GET']
         ];
     }
 
@@ -58,6 +59,14 @@ class FoodController extends ActiveController
         $model = new Food();
         
         return $model->Ingestion($ingestion);
+    }
+
+    //Food search in category
+    public function actionFoodCategorySearch($category_id, $name)
+    {
+        $model = new Food();
+
+        return $model->FoodCategorySearch($category_id, $name);
     }
 
 

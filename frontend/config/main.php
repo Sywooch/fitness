@@ -98,6 +98,7 @@ return [
                 'api/food-by-category' => '/food/get-food-by-category',
                 'api/food-by-id' => '/food/get-food-by-id',
                 'api/recommend-food' => '/food/recommend-food',
+                'api/food-category-search' => '/food/food-category-search',
                 'api/add-food' => '/user-food/add-food',
                 'api/day-food' => '/user-food/day-food',
                 'api/food-by-date' => 'user-food/food-by-date',
