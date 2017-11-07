@@ -10,6 +10,7 @@ class ConsoleReminder extends Reminder
     
     public function FindReminders()
     {
+        date_default_timezone_set('Europe/Kiev');
         $current_time = date('H:i');
         $current_day_number = date('N');
 
@@ -20,7 +21,7 @@ class ConsoleReminder extends Reminder
             ->orWhere(['reiterate' => $current_day_number, 'push' => 1])
             ->andWhere(['=', 'time', $current_time])
             ->all();
-
+        
         return $reminders;
     }
     
