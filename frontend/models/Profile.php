@@ -201,6 +201,39 @@ class Profile extends \yii\db\ActiveRecord
         }
     }
 
+    //Delete user account with all files
+    public function DeleteAccount()
+    {
+        $lib = new Library();
+        $user = Yii::$app->user->identity;
+
+        $profile_photo = ProfilePhoto::find()
+            ->where(['user_id' => $user->getId()])
+            ->all();
+
+        if($profile_photo){
+            foreach ($profile_photo as $photo){
+                if(isset($photo->photo)){
+                    unlink(getcwd().'/'.$photo->photo);
+                }
+            }
+        }
+
+        if($user->background_image != null && $user->background_image != 'Not set'){
+            unlink(getcwd().'/'.$user->background_image);
+        }
+
+        if($user->avatar){
+            $lib->CheckUpdateAvatar($user->avatar);
+        }
+
+        if($user->delete()){
+            return $lib->response(200, 'Successfully deleted.');
+        } else {
+            return $lib->response(500, 'Can\'t delete user.');
+        }
+    }
+
     //Change/Reset password
     public function sendEmail($user)
     {

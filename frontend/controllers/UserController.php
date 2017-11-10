@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\Device;
+use frontend\models\Profile;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
 use yii\web\Response;
@@ -29,7 +30,8 @@ class UserController extends ActiveController
             'google-auth' => ['POST'],
             'upload-avatar' => ['POST'],
             'logout' => ['POST'],
-            'get-user' => ['GET']
+            'get-user' => ['GET'],
+            'delete-account' => ['DELETE']
         ];
     }
 
@@ -206,6 +208,14 @@ class UserController extends ActiveController
                 'target' => $user->target
             ];
         }
+    }
+    
+    //Delete user account
+    public function actionDeleteAccount()
+    {
+        $model = new Profile();
+        
+        return $model->DeleteAccount();
     }
     
 }

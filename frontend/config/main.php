@@ -79,6 +79,7 @@ return [
                 'api/logout' => '/user/logout',
                 'api/upload-avatar' => '/user/upload-avatar',
                 'api/get-user' => '/user/get-user',
+                'api/delete-account' => '/user/delete-account',
                 'api/create-profile' => '/profile/create-profile',
                 'api/change-profile' => '/profile/change-user-profile',
                 'api/add-result' => '/profile/add-result',
