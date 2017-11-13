@@ -103,6 +103,7 @@ return [
                 'api/add-food' => '/user-food/add-food',
                 'api/day-food' => '/user-food/day-food',
                 'api/food-by-date' => 'user-food/food-by-date',
+                'api/delete-food' => 'user-food/delete-food',
                 'api/news' => '/news/all-news',
                 'api/add-exercise' => '/exercise/add-exercise',
                 'api/get-day-exercises' => '/exercise/get-day-exercises',

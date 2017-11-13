@@ -21,7 +21,8 @@ class UserFoodController extends ActiveController
         return [
             'add-food' => ['POST'],
             'day-food' => ['GET'],
-            'food-by-date' => ['GET']
+            'food-by-date' => ['GET'],
+            'delete-food' => ['DELETE']
         ];
     }
 
@@ -69,6 +70,19 @@ class UserFoodController extends ActiveController
         $model = new UserFood();
 
         return $model->DateFood($date);
+    }
+
+    //Delete user food by id
+    public function actionDeleteFood()
+    {
+        $lib = new Library();
+        $model = new UserFood();
+        
+        if(Yii::$app->request->post('food_id')){
+            return $model->DeleteFood(Yii::$app->request->post('food_id'));
+        } else {
+            return $lib->response(400, 'Bad parameters.');
+        }
     }
 
 }

@@ -31,7 +31,7 @@ class UserFood extends \yii\db\ActiveRecord
         $user_id = Yii::$app->user->identity->getId();
 
         $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT food_category_id, user_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
+            'sql' => "SELECT food_category_id, user_id, user_food.id AS food_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
                     FROM user_food
                     INNER JOIN food_category ON food_category.id = user_food.food_category_id
                     WHERE user_id = $user_id AND DATE(user_food.created_at) = CURDATE()
@@ -49,7 +49,7 @@ class UserFood extends \yii\db\ActiveRecord
         $user_id = Yii::$app->user->identity->getId();
 
         $dataProvider = new SqlDataProvider([
-            'sql' => "SELECT food_category_id, user_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
+            'sql' => "SELECT food_category_id, user_id ,user_food.id AS food_id, food_category.image, product_name, protein, fat, carbs, kcal, gram, user_food.created_at
                     FROM user_food
                     INNER JOIN food_category ON food_category.id = user_food.food_category_id
                     WHERE user_id = $user_id AND DATE(user_food.created_at) = $date
@@ -59,6 +59,20 @@ class UserFood extends \yii\db\ActiveRecord
         ]);
 
         return $dataProvider;
+    }
+
+    //Delete user food by id
+    public function DeleteFood($food_id)
+    {
+        $lib = new Library();
+
+        $user_food = UserFood::findOne(['id' => $food_id, 'user_id' => Yii::$app->user->identity->getId()]);
+
+        if($user_food && $user_food->delete()){
+            return $lib->response(200, 'Successfully deleted.');
+        } else {
+            return $lib->response(404, 'Food not found.');
+        }
     }
 
 }
