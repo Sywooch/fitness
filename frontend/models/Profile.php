@@ -50,6 +50,7 @@ class Profile extends \yii\db\ActiveRecord
             $user->desired_weight = $request['desired_weight'];
             $user->lifestyle = $request['lifestyle'];
             $user->target = $request['target'];
+            $user->system_measures = $request['system_measures'];
             $this->bust = $request['bust'];
             $this->waist = $request['waist'];
             $this->hips = $request['hips'];
@@ -159,6 +160,7 @@ class Profile extends \yii\db\ActiveRecord
         $user->birthday = $request['birthday'];
         $user->lifestyle = $request['lifestyle'];
         $user->target = $request['target'];
+        $user->system_measures = $request['system_measures'];
 
         $upload_background_image = UploadedFile::getInstanceByName("background");
         $upload_avatar = UploadedFile::getInstanceByName("avatar");
@@ -194,7 +196,8 @@ class Profile extends \yii\db\ActiveRecord
                 'background' => $user->background_image == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->background_image,
                 'avatar' => $user->avatar == 'Not set' ? 'Not set' : Yii::$app->params['photo'].$user->avatar,
                 'lifestyle' => $user->lifestyle,
-                'target' => $user->target
+                'target' => $user->target,
+                'system_measures' => $user->system_measures
             ]);
         } else {
             return $lib->response(409, 'Can\'t save.', $user->getErrors());

@@ -36,7 +36,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
 
-            [['gender', 'desired_weight', 'height', 'lifestyle', 'target'], 'integer'],
+            [['gender', 'desired_weight', 'height', 'lifestyle', 'target', 'system_measures'], 'integer'],
 
             [['created_at', 'country', 'birthday'], 'string'],
             [['avatar', 'background_image'], 'string', 'max' => 255],

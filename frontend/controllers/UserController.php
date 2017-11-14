@@ -205,7 +205,8 @@ class UserController extends ActiveController
                 'birthday' => $user->birthday,
                 'height' => $user->height,
                 'lifestyle' => $user->lifestyle,
-                'target' => $user->target
+                'target' => $user->target,
+                'system_measures' => $user->system_measures
             ];
         }
     }
