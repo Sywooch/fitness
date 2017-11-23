@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 01 2017 г., 13:45
+-- Время создания: Ноя 23 2017 г., 10:12
 -- Версия сервера: 5.6.31
 -- Версия PHP: 5.6.23
 
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `cal` varchar(50) DEFAULT NULL,
   `fats` varchar(50) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -48,9 +49,9 @@ CREATE TABLE IF NOT EXISTS `activity` (
 -- Дамп данных таблицы `activity`
 --
 
-INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `training_time`, `specification`, `important`, `cal`, `fats`, `image`, `created_at`) VALUES
-(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', '15 min', 'Some specification', 'Not dropping down low enough', '33', '50', 'activity_images/1756.jpg', '2017-10-18 10:03:02'),
-(2, 'Activity_2', 1, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', '25 min', 'Specification', 'Not dropping down low enough', '52', '113', 'activity_images/1225478471_gg3589.jpg', '2017-10-18 10:03:03');
+INSERT INTO `activity` (`id`, `name`, `activity_category_id`, `working_weight`, `number_of_approaches`, `number_of_repetitions`, `interval_between_approaches`, `technique`, `training_time`, `specification`, `important`, `cal`, `fats`, `image`, `video`, `created_at`) VALUES
+(1, 'Activity_1', 1, '60 lbs', '4 time', '15 time', '1,5 min', 'The weight rests bla-bla...', '15 min', 'Some specification', 'Not dropping down low enough', '33', '50', 'activity_images/1756.jpg', 'activity_video/xaxa.mp4', '2017-10-18 10:03:02'),
+(2, 'Activity_2', 1, '50 lbs', '5 time', '22 time', '1 min', 'The weight rests bla-bla...', '25 min', 'Specification', 'Not dropping down low enough', '52', '113', 'activity_images/1225478471_gg3589.jpg', 'activity_video/xaxa.mp4', '2017-10-18 10:03:03');
 
 -- --------------------------------------------------------
 
@@ -135,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `food` (
   `fats` varchar(50) NOT NULL,
   `carbohydrates` varchar(50) NOT NULL,
   `directions` text NOT NULL,
+  `specification` text,
   `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -143,9 +145,9 @@ CREATE TABLE IF NOT EXISTS `food` (
 -- Дамп данных таблицы `food`
 --
 
-INSERT INTO `food` (`id`, `name`, `food_category_id`, `cal`, `grams`, `proteins`, `fats`, `carbohydrates`, `directions`, `image`, `created_at`) VALUES
-(1, 'Food_1', 1, '500', '1000', '100', '33', '11', 'Some text', 'food_images/food-712665_960_720.jpg', '2017-10-18 10:42:35'),
-(2, 'Food_2', 1, '410', '450', '97', '58', '19', 'Some directions', 'photo-70497.jpg', '2017-10-18 10:42:35');
+INSERT INTO `food` (`id`, `name`, `food_category_id`, `cal`, `grams`, `proteins`, `fats`, `carbohydrates`, `directions`, `specification`, `image`, `created_at`) VALUES
+(1, 'Food_1', 1, '500', '1000', '100', '33', '11', 'Some text', 'Specification_1', 'food_images/food-712665_960_720.jpg', '2017-10-18 10:42:35'),
+(2, 'Food_2', 1, '410', '450', '97', '58', '19', 'Some directions', 'Specification_2', 'photo-70497.jpg', '2017-10-18 10:42:35');
 
 -- --------------------------------------------------------
 
@@ -209,15 +211,14 @@ CREATE TABLE IF NOT EXISTS `profile` (
   `forearm` float NOT NULL,
   `chest` float NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `profile`
 --
 
 INSERT INTO `profile` (`id`, `user_id`, `current_weight`, `bust`, `waist`, `hips`, `thigh`, `forearm`, `chest`, `created_at`) VALUES
-(18, 6, 44, 34, 54, 57, 65, 32, 43, '2017-10-03 01:30:09'),
-(19, 9, 33, 33, 33, 33, 33, 33, 33, '2017-10-06 12:59:57');
+(18, 6, 44, 34, 54, 57, 65, 32, 43, '2017-10-03 01:30:09');
 
 -- --------------------------------------------------------
 
@@ -288,7 +289,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `username`, `avatar`, `background_image`, `auth_key`, `password_hash`, `password_reset_token`, `birthday`, `country`, `gender`, `height`, `desired_weight`, `lifestyle`, `target`, `email`, `status`, `created_at`) VALUES
 (1, 'Admin', NULL, NULL, 'dklsjhgljdfhg', 'skdfhjgbg58yuh', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'prybylov1.v@gmail.com', 0, '2017-09-29 21:00:00'),
 (6, 'Vasya', 'avatars/59d4c655b1ca8.jpg', NULL, 'k9KmzLCa2fVAcLIgm-Mv0ZN6W2DluQvx', '$2y$13$hXgOWEPT5gQtYPSokOeOdOxH50jvq/8T2IXp0ySOBjlajWaolK.me', NULL, '12-12-2010', 'Ukraine', 1, NULL, NULL, 2, 3, 'test@gmail.com', 0, '2017-09-30 10:02:24'),
-(9, 'ALALA', 'avatars/59de1e971f4fd.jpg', 'background_images/59de1e971f4f9.jpg', 'IMYvMozSGPndkSTfafZZyvJOrZ1g4Qgq', '$2y$13$IhXITN88wklA3vNx6uS45.82e7AWsh3zPWIS.FygAiIAhrh.60Pl6', NULL, '12-12-2010', 'USA', 0, NULL, NULL, 0, 0, 'test.test@test.test', 0, '2017-09-30 10:37:57'),
 (12, 'Максим Снигур', 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/18486023_1892726050945540_2779060632811534807_n.jpg?oh=94616775167ba06dc39bcabb811ea5c1&oe=5A4B1D54', NULL, 'A9a6gk1U_EmK9x1NnjEFjlyMMFm8gxQt', '$2y$13$OlfvIdrnCp6WR7xJa/t8pOHAFM34XhyqdmWvwDPFWirMmzmlb3BkS', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'snigur@16x.zp.ua', 0, '2017-10-02 09:43:59'),
 (13, 'Vasya', 'Not set', NULL, '2jevYFNr6b0nCDqlgOMoBtWGn4Un20bW', '$2y$13$AQihNh1se4Air0UqyoPW6OEDhfgIuv0ZOierxrmNCozDuNdP6KBni', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 'test@gmail1.com', 0, '2017-10-10 09:06:22');
 
@@ -309,15 +309,14 @@ CREATE TABLE IF NOT EXISTS `user_food` (
   `kcal` double NOT NULL,
   `gram` double NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user_food`
 --
 
 INSERT INTO `user_food` (`id`, `user_id`, `food_category_id`, `product_name`, `protein`, `fat`, `carbs`, `kcal`, `gram`, `created_at`) VALUES
-(1, 6, 1, 'Some product', 33, 29, 12, 23, 150, '2017-10-30 14:43:59'),
-(2, 6, 1, 'Some product', 33, 29, 12, 18, 210, '2017-10-30 14:44:24');
+(1, 6, 1, 'Some product', 33, 29, 12, 23, 150, '2017-10-30 14:43:59');
 
 -- --------------------------------------------------------
 
@@ -479,7 +478,7 @@ ALTER TABLE `news`
 -- AUTO_INCREMENT для таблицы `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT для таблицы `profile_photo`
 --
@@ -499,7 +498,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `user_food`
 --
 ALTER TABLE `user_food`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `water`
 --

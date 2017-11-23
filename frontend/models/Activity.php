@@ -18,7 +18,7 @@ class Activity extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'working_weight', 'number_of_approaches', 'number_of_repetitions', 'interval_between_approaches', 'technique', 'activity_category_id', 'training_time', 'specification'], 'required'],
-            [['image', 'name', 'working_weight', 'number_of_approaches', 'number_of_repetitions', 'interval_between_approaches', 'technique', 'important'], 'string', 'max' => 255],
+            [['image', 'video', 'name', 'working_weight', 'number_of_approaches', 'number_of_repetitions', 'interval_between_approaches', 'technique', 'important'], 'string', 'max' => 255],
             [['cal', 'fats', 'training_time'], 'string', 'max' => 50],
             [['activity_category_id'], 'integer']
         ];
@@ -30,7 +30,7 @@ class Activity extends \yii\db\ActiveRecord
         $dataProvider = new ActiveDataProvider([
             'query' => static::find()
                 ->select([
-                    'id', 'name', 'cal', 'training_time', 'specification', 'image'
+                    'id', 'name', 'cal', 'training_time', 'specification', 'image', 'video'
                 ])
                 ->orderBy(['created_at' => SORT_DESC]),
             'pagination' => [
