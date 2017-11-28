@@ -40,7 +40,7 @@ class ActivityController extends ActiveController
     {
         $model = new Activity();
         
-        return $model->RecommendActivity(); 
+        return $model->RecommendActivity(Yii::$app->request->queryParams); 
     }
     
     //get activity information by id

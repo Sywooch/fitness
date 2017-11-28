@@ -24,12 +24,27 @@ class News extends \yii\db\ActiveRecord
     }
 
     //Get All news
-    public function AllNews()
+    public function AllNews($params)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => static::find()->orderBy(['created_at' => SORT_DESC]),
+            'query' => static::find(),
             'pagination' => [
                 'pageSize' => 20
+            ]
+        ]);
+
+        $this->load($params);
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'created_at' => [
+                    'asc' => ['created_at' => SORT_ASC],
+                    'desc' => ['created_at' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
+            ],
+            'defaultOrder' => [
+                'created_at' => SORT_DESC
             ]
         ]);
 

@@ -26,16 +26,30 @@ class Food extends \yii\db\ActiveRecord
     }
 
     //Get Food by category_id
-    public function FoodByCategory($category_id)
+    public function FoodByCategory($category_id, $params)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => static::find()
                 ->select([
                     'id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
                 ])
-                ->where(['food_category_id' => $category_id])
-                ->orderBy(['created_at' => SORT_DESC]),
+                ->where(['food_category_id' => $category_id]),
             'pagination' => false
+        ]);
+
+        $this->load($params);
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'id' => [
+                    'asc' => ['id' => SORT_ASC],
+                    'desc' => ['id' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
+            ],
+            'defaultOrder' => [
+                'id' => SORT_DESC
+            ]
         ]);
 
         return $dataProvider;
@@ -50,28 +64,25 @@ class Food extends \yii\db\ActiveRecord
     }
 
     //Get recommended food for user
-    public function Ingestion($time)
+    public function Ingestion($time, $params)
     {
         $lib = new Library();
 
         if($time == 'breakfast'){
             $query = Food::find()
             ->select([
-                'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
-            ])
-            ->orderBy(['rand()' => SORT_DESC]);
+                'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image', 'created_at'
+            ]);
         } elseif($time == 'dinner'){
             $query = Food::find()
                 ->select([
-                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
-                ])
-                ->orderBy(['rand()' => SORT_DESC]);
+                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image', 'created_at'
+                ]);
         } elseif($time == 'launch'){
             $query = Food::find()
                 ->select([
-                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'
-                ])
-                ->orderBy(['rand()' => SORT_DESC]);
+                    'id', 'name', 'specification', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image', 'created_at'
+                ]);
         }
 
         if(isset($query)){
@@ -83,6 +94,21 @@ class Food extends \yii\db\ActiveRecord
                 ]
             ]);
 
+            $this->load($params);
+
+            $dataProvider->setSort([
+                'attributes' => [
+                    'created_at' => [
+                        'asc' => ['created_at' => SORT_ASC],
+                        'desc' => ['created_at' => SORT_DESC],
+                        'default' => SORT_ASC
+                    ],
+                ],
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC
+                ]
+            ]);
+
             return $dataProvider;
         } else {
             return $lib->response(404, 'Not found');
@@ -90,16 +116,30 @@ class Food extends \yii\db\ActiveRecord
     }
 
     //Food search in category
-    public function FoodCategorySearch($category_id, $product_name)
+    public function FoodCategorySearch($category_id, $product_name, $params)
     {
         $query = static::find()
-            ->select(['id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image'])
-            ->orderBy(['created_at' => SORT_DESC]);
+            ->select(['id', 'name', 'cal', 'grams', 'proteins', 'fats', 'carbohydrates', 'image']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
                 'pageSize' => 20
+            ]
+        ]);
+
+        $this->load($params);
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'id' => [
+                    'asc' => ['id' => SORT_ASC],
+                    'desc' => ['id' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
+            ],
+            'defaultOrder' => [
+                'id' => SORT_DESC
             ]
         ]);
 

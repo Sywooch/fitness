@@ -39,7 +39,7 @@ class NewsController extends ActiveController
     {
         $model = new News();
 
-        return $model->AllNews();
+        return $model->AllNews(Yii::$app->request->queryParams);
     }
 
 }

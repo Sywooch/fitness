@@ -42,7 +42,7 @@ class FoodController extends ActiveController
     {
         $model = new Food();
 
-        return $model->FoodByCategory($category_id);
+        return $model->FoodByCategory($category_id, Yii::$app->request->queryParams);
     }
 
     //get food information by id
@@ -58,7 +58,7 @@ class FoodController extends ActiveController
     {
         $model = new Food();
         
-        return $model->Ingestion($ingestion);
+        return $model->Ingestion($ingestion, Yii::$app->request->queryParams);
     }
 
     //Food search in category
@@ -66,7 +66,7 @@ class FoodController extends ActiveController
     {
         $model = new Food();
 
-        return $model->FoodCategorySearch($category_id, $name);
+        return $model->FoodCategorySearch($category_id, $name, Yii::$app->request->queryParams);
     }
 
 

@@ -25,16 +25,30 @@ class Activity extends \yii\db\ActiveRecord
     }
 
     //Get Activities by category_id
-    public function RecommendActivity()
+    public function RecommendActivity($params)
     {
         $dataProvider = new ActiveDataProvider([
             'query' => static::find()
                 ->select([
-                    'id', 'name', 'cal', 'training_time', 'specification', 'image', 'video'
-                ])
-                ->orderBy(['created_at' => SORT_DESC]),
+                    'id', 'name', 'cal', 'training_time', 'specification', 'image', 'video', 'created_at'
+                ]),
             'pagination' => [
                 'pageSize' => 20
+            ]
+        ]);
+
+        $this->load($params);
+
+        $dataProvider->setSort([
+            'attributes' => [
+                'created_at' => [
+                    'asc' => ['created_at' => SORT_ASC],
+                    'desc' => ['created_at' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
+            ],
+            'defaultOrder' => [
+                'created_at' => SORT_DESC
             ]
         ]);
 
