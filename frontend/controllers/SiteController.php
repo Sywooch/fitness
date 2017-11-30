@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -72,6 +73,23 @@ class SiteController extends Controller
                 'message' => $this->_getStatusCodeMessage($exception->statusCode)
             ];
         }
+    }
+
+    public function actionActivate($verify_token)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+
+        $user = User::findOne(['auth_key' => $verify_token, 'status' => 2]);
+
+        if($user){
+            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->status = 0;
+            $user->save(false);
+        }
+
+        return $this->render('activate', [
+            'user' => $user
+        ]);
     }
 
     public function actionResetPassword($token)

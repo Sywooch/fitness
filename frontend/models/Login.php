@@ -30,7 +30,7 @@ class Login extends Model
         $device = new Device();
         $auth_user = $user->findByEmail($request['email']);
 
-        if($auth_user){
+        if($auth_user && $auth_user->status == 0){
             $this->user_id = $auth_user->id;
             $this->auth_key = $auth_user->auth_key;
             $this->username = $auth_user->username;

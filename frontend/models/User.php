@@ -9,6 +9,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const STATUS_DELETED = 1;
     const STATUS_ACTIVE = 0;
+    const STATUS_VERIFIED = 2;
 
     public $_user;
     public $photo;
@@ -33,8 +34,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_VERIFIED],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED, self::STATUS_VERIFIED]],
 
             [['gender', 'desired_weight', 'lifestyle', 'target', 'system_measures'], 'integer'],
             [['height'], 'number'],
@@ -68,6 +69,17 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $device->device_token = $request['device_token'];
             $device->type = $request['type'];
             $device->save();
+
+            Yii::$app
+                ->mailer
+                ->compose(
+                    ['html' => 'activateAccount-html'],
+                    ['user' => $this]
+                )
+                ->setFrom([Yii::$app->params['fromEmail'] => Yii::$app->params['APP']])
+                ->setTo($this->email)
+                ->setSubject('Activate account')
+                ->send();
 
             return true;
         } else {

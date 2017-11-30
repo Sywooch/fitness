@@ -85,8 +85,8 @@ class UserController extends ActiveController
         if($user->load(Yii::$app->request->post()) && $user->validate() && $user->register(Yii::$app->request->post('User'))){
             return [
                 'status' => 200,
-                'message' => 'User has been registered.',
-                'token' => $user->auth_key,
+                'message' => 'User has been registered, please check your email.',
+//                'token' => $user->auth_key,
                 'user' => [
                     'user_id' => $user->id,
                     'avatar' => $user->avatar,
