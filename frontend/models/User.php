@@ -106,7 +106,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email, 'status' => [self::STATUS_ACTIVE, self::STATUS_VERIFIED]]);
     }
 
     public static function findByPasswordResetToken($token)

@@ -50,9 +50,30 @@ class Login extends Model
                 $device->save();
             }
 
-            return true;
+            return [
+                'status' => 200,
+                'message' => 'User has been authorized.',
+                'token' => $this->auth_key,
+                'user' => [
+                    'user_id' => $this->user_id,
+                    'avatar' => $this->avatar,
+                    'name' => $this->username,
+                    'email' => $this->email,
+                ]
+            ];
+        } elseif($auth_user && $auth_user->status == 2) {
+            return [
+                'status' => 403,
+                'message' => 'Please confirm your email.'
+            ];
         } else {
-            return false;
+            return [
+                'status' => 400,
+                'message' => 'Bad request.',
+                'params' => [
+                    'error' => 'Incorrect username or password.'
+                ]
+            ];
         }
     }
 

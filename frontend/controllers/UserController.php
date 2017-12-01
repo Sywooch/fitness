@@ -59,18 +59,8 @@ class UserController extends ActiveController
         $login = new Login();
         $lib = new Library();
 
-        if($login->load(Yii::$app->request->post()) && $login->validate() && $login->login(Yii::$app->request->post('Login'))){
-            return [
-                'status' => 200,
-                'message' => 'User has been authorized.',
-                'token' => $login->auth_key,
-                'user' => [
-                    'user_id' => $login->user_id,
-                    'avatar' => $login->avatar,
-                    'name' => $login->username,
-                    'email' => $login->email,
-                ]
-            ];
+        if($login->load(Yii::$app->request->post()) && $login->validate()){
+            return $login->login(Yii::$app->request->post('Login'));
         } else {
             return $lib->response(400, 'Bad request.', $login->getErrors());
         }
