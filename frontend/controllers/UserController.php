@@ -25,6 +25,7 @@ class UserController extends ActiveController
         return [
             'login' => ['POST'],
             'register' => ['POST'],
+            'activate' => ['POST'],
             'facebook-auth' => ['POST'],
             'twitter-auth' => ['POST'],
             'google-auth' => ['POST'],
@@ -48,7 +49,7 @@ class UserController extends ActiveController
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
         $behaviors['authenticator'] = [
             'class' => HttpBearerAuth::className(),
-            'except' => ['login', 'register', 'facebook-auth', 'instagram-auth', 'twitter-auth', 'google-auth'],
+            'except' => ['login', 'register', 'activate', 'facebook-auth', 'instagram-auth', 'twitter-auth', 'google-auth'],
         ];
         return $behaviors;
     }
@@ -86,6 +87,19 @@ class UserController extends ActiveController
             ];
         } else {
             return $lib->response(400, 'Bad request.', $user->getErrors());
+        }
+    }
+
+    //Activate account
+    public function actionActivate()
+    {
+        $lib = new Library();
+        $profile = new Profile();
+
+        if(Yii::$app->request->post('verify_token') && Yii::$app->request->post('email')){
+            return $profile->Activate(Yii::$app->request->post('verify_token'), Yii::$app->request->post('email'));
+        } else {
+            return $lib->response(400, 'Bad request.');
         }
     }
 

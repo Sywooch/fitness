@@ -79,17 +79,7 @@ class SiteController extends Controller
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
 
-        $user = User::findOne(['auth_key' => $verify_token, 'status' => 2]);
-
-        if($user){
-            $user->auth_key = Yii::$app->security->generateRandomString();
-            $user->status = 0;
-            $user->save(false);
-        }
-
-        return $this->render('activate', [
-            'user' => $user
-        ]);
+        return $this->redirect('ifitnessapp1488grdk://verify_token-'.$verify_token);
     }
 
     public function actionResetPassword($token)
@@ -115,6 +105,7 @@ class SiteController extends Controller
     public function actionComplete()
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+
         return $this->render('complete');
     }
 }

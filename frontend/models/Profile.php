@@ -147,6 +147,28 @@ class Profile extends \yii\db\ActiveRecord
         }
     }
 
+    //Activate account
+    public function Activate($verify_token, $email)
+    {
+        $lib = new Library();
+
+        $user = User::findOne(['auth_key' => $verify_token]);
+
+        if($user && $user->status == 2){
+            $user->auth_key = Yii::$app->security->generateRandomString();
+            $user->status = 0;
+            if($user->save(false)){
+                return $lib->response(200, 'Successfully activated.', ['token' => $user->auth_key]);
+            } else {
+                return $lib->response(500, 'Can\'t save data.');
+            }
+        } elseif($user && $user->status != 2) {
+            return $lib->response(400, 'User has already been activated.');
+        } else {
+            return $lib->response(404, 'User not found.');
+        }
+    }
+
     //Change user profile
     public function ChangeUserProfile($request)
     {

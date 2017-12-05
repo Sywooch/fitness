@@ -73,6 +73,7 @@ return [
 
                 'api/login' => '/user/login',
                 'api/register' => '/user/register',
+                'api/activate' => '/user/activate',
                 'api/facebook-auth' => '/user/facebook-auth',
                 'api/twitter-auth' => '/user/twitter-auth',
                 'api/google-auth' => '/user/google-auth',
