@@ -152,7 +152,7 @@ class Profile extends \yii\db\ActiveRecord
     {
         $lib = new Library();
 
-        $user = User::findOne(['auth_key' => $verify_token]);
+        $user = User::findOne(['auth_key' => $verify_token, 'email' => $email]);
 
         if($user && $user->status == 2){
             $user->auth_key = Yii::$app->security->generateRandomString();
