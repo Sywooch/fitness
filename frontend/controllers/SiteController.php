@@ -79,7 +79,7 @@ class SiteController extends Controller
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
 
-        return $this->redirect('ifitnessapp1488grdk://verify_token#4-4#'.$verify_token);
+        return $this->redirect(urldecode('ifitnessapp1488grdk://verify_token=').$verify_token);
     }
 
     public function actionResetPassword($token)
