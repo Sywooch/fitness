@@ -69,12 +69,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             $device->device_token = $request['device_token'];
             $device->type = $request['type'];
             $device->save();
-
+            
             Yii::$app
                 ->mailer
                 ->compose(
                     ['html' => 'activateAccount-html'],
-                    ['user' => $this]
+                    ['user' => $this, 'type' => $device->type]
                 )
                 ->setFrom([Yii::$app->params['fromEmail'] => Yii::$app->params['APP']])
                 ->setTo($this->email)

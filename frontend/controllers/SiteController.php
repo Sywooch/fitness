@@ -75,11 +75,19 @@ class SiteController extends Controller
         }
     }
 
-    public function actionActivate($verify_token)
+    public function actionActivateIos($verify_token)
     {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
 
-        return $this->redirect(urldecode('ifitnessapp1488grdk://verify_token=').$verify_token);
+        return $this->redirect('ifitnessapp1488grdk://verify_token='.$verify_token);
+    }
+
+    //To do
+    public function actionActivateAndroid($verify_token)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+
+        return $this->redirect('android://verify_token='.$verify_token);
     }
 
     public function actionResetPassword($token)
