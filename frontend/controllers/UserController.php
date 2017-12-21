@@ -175,9 +175,9 @@ class UserController extends ActiveController
         $user = Yii::$app->user->identity;
 
         if(Yii::$app->request->post('logout') && $user){
-            $user->auth_key = Yii::$app->security->generateRandomString();
-            $user->save(false);
-            $token = Device::findOne(['device_token' => Yii::$app->request->post('device_token')]);
+//            $user->auth_key = Yii::$app->security->generateRandomString();
+//            $user->save(false);
+            $token = Device::findOne(['device_token' => Yii::$app->request->post('device_token'), 'user_id' => $user->getId()]);
 
             if($token){
                 $token->delete();
